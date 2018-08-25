@@ -40,7 +40,9 @@ dist
 .DS_Store
 
 # extra files
--- extra
+-- extra/**/*
+-- extra/**/**/*
+-- extra/*
 mockup
 #sass cache
 **.sass-cache
