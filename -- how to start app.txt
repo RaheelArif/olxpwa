@@ -1,0 +1,57 @@
+First step:
+Run the mongodb service from cmd
+-----------------------------------
+run cmd as administrator and type
+"net start mongodb"
+===================================
+Second Step:
+Run the development server
+-----------------------------------
+open a cmd in this directory and type
+npm start
+once the development server is running,
+it will open a new browser window with
+a url of "localhost:3000", and will
+display fron end of the app.
+===================================
+3rd step:
+Running Server Side Code so that app
+can interact with server.
+-----------------------------------
+if debugging is required on vsCode, then
+run the debugger with file named as
+"server.js" and is available at
+"server/server.js" location,
+
+if debugging i not required on vsCode, then
+run the server.js file from CMD as a node file
+to do this,
+open cmd from "server" folder and type
+"node server.js"
+===================================
+Step4:
+App is running and server is up, now
+App can interact with server, and a user
+can use the app.
+to Login use the following
+credentials
+--------------
+user login:
+--------------
+username: user
+password: adminadmin
+--------------
+Donor Login:
+--------------
+username: donor
+password: adminadmin
+--------------
+===================================
+===================================
+===================================
+===================================
+===================================
+===================================
+===================================
+===================================
+===================================

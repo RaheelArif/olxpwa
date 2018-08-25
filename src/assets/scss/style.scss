@@ -1,0 +1,17 @@
+$orange-color: #ff7700;
+$orange-color-hover: #ffa454;
+$blue-color: #2965be;
+html, body {
+  // height: 5000px;
+}
+@import 'buttons';
+@import 'misc';
+@import '../../components/Common/scss/common';
+@import '../../components/Homepage/scss/homepage';
+@import '../../components/FeaturedAds/scss/featured-listing';
+@import '../../components/AllAds/scss/all-ads';
+@import '../../components/SingleListingPage/scss/single-page';
+@import '../../components/RegisterPage/scss/registration-form';
+@import '../../components/MyAccountPage/scss/my-account';
+@import '../../components/PostAdPage/scss/post-ad';
+// @import '../../components/Common/scss/footer';

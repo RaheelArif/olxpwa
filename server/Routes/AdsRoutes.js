@@ -1,0 +1,224 @@
+const express = require('express');
+const router = express.Router();
+const ensureAuthentication = require('../Controllers/EnsureAuthentication');
+const AdsController = require('../Controllers/AdsController');
+const fs = require('fs');
+const path = require('path');
+
+function deleteFile(filename) {
+  var count = 1;
+  var retries = 5;
+  var retryDelay = 1000;
+  if (fs.existsSync(filename)) {
+    fs.unlink(filename, (error) => {/* logError(error); */ }); //eslint-disable-line no-unused-vars
+  } else {
+    setTimeout(() => {
+      if (count <= retries) {
+        deleteFile(filename);
+      }
+      count++;
+    }, retryDelay);
+  }
+}
+
+router.route('/submitAd').post(
+  // ensureAuthentication.userAuthentication,
+  function (req, res) {
+    const uploadDir = path.resolve(__dirname) + "/../uploads/ads/images";
+    const formidable = require('formidable');
+    let form = new formidable.IncomingForm();
+    form.uploadDir = uploadDir;
+    form.keepExtensions = true;
+    form.maxFieldsSize = 10 * 1024 * 1024; // 10MB
+    form.maxFileSize = 10 * 1024 * 1024; // 10MB
+    form.multiples = true;
+    form.type = 'multipart';
+    form.parse(req, function (err, fields, files) {
+      if (err) {
+        res.json({
+          status: "failed",
+          message: "Images can't be uploaded",
+          error: err
+        });
+      } else {
+        let imgNames = [];
+        let maxImagesAllowed = 4;
+        for (let x = 1; x <= maxImagesAllowed; x++) {
+          if (files[`image-${x}`]) {
+            let nameArr = files[`image-${x}`].path.split('\\');
+            let fName = nameArr[nameArr.length - 1];
+            if (files[`image-${x}`].size >= 1) {
+              imgNames.push(fName);
+            } else {
+              deleteFile(uploadDir + '/' + fName);
+            }
+          }
+        }
+        AdsController.createNewAd(fields, imgNames)
+          .then(function (response) {
+            res.json(response);
+            // res.json(response);
+          }).catch(function (response) {
+            res.send(response.message);
+          }
+          );
+      }
+    });
+  }
+);
+
+router.route('/getAllAds').get(
+  function (req, res) {
+    AdsController.getAllAds()
+      .then(ads => {
+        res.json(ads);
+      }).catch(error => {
+        res.send(error);
+      });
+  }
+);
+
+router.route('/getAdById').get(
+  function (req, res) {
+    AdsController.getAdById(req.query.adId)
+      .then(ad => {
+        res.json(ad);
+      }).catch(error => {
+        res.send(error);
+      });
+  }
+);
+
+/*
+router.route('/getMyListings').get(
+  ensureAuthentication.userAuthentication,
+  function (req, res) {
+    AdsController.getMyListings(req.user)
+      .then(listings => {
+        res.json(listings);
+      }).catch(error => {
+        res.send(error);
+      });
+  }
+);
+*/
+
+router.route('/updateAdListing').post(
+  ensureAuthentication.userAuthentication,
+  function (req, res) {
+    const formidable = require('formidable');
+    let form = new formidable.IncomingForm();
+    let uploadDir = path.resolve(__dirname) + "/../uploads/ads/images";
+    form.uploadDir = uploadDir;
+    form.keepExtensions = true;
+    form.maxFieldsSize = 10 * 1024 * 1024; // 10MB
+    form.maxFileSize = 10 * 1024 * 1024; // 10MB
+    form.multiples = true;
+    form.type = 'multipart';
+    form.parse(req, function (err, fields, files) {
+      if (err) {
+        res.json({
+          status: "failed",
+          message: "Images can't be uploaded",
+          error: err
+        });
+      } else {
+        let imgNames = [];
+        let maxImagesAllowed = 4;
+        for (let x = 1; x <= maxImagesAllowed; x++) {
+          if (files[`image-${x}`]) {
+            let nameArr = files[`image-${x}`].path.split('\\');
+            let fName = nameArr[nameArr.length - 1];
+            if (files[`image-${x}`].size >= 1) {
+              imgNames.push(fName);
+            } else {
+              deleteFile(uploadDir + '/' + fName);
+            }
+          }
+        }
+        AdsController.updateAdListing(fields, imgNames)
+          .then(function (response) {
+            res.json(response);
+          }).catch(function (error) {
+            res.send(error);
+          });
+      }
+    });
+  }
+);
+
+router.route('/deleteAdListing').post(
+  ensureAuthentication.userOrAdminAuthentication,
+  function (req, res) {
+    console;
+    AdsController.deleteAdListing(req.body.adId)
+      .then(response => {
+        res.json(response);
+      }).catch(error => {
+        res.send(error);
+      });
+  }
+);
+
+router.route('/filterAds').get(
+  function (req, res) {
+    AdsController.filterAds(JSON.parse(req.query.filters))
+      .then(ads => {
+        res.json(ads);
+      }).catch(error => {
+        res.send(error);
+      });
+  }
+);
+
+router.route('/searchAdsListings').get(
+  function (req, res) {
+    AdsController.searchAdsListings(JSON.parse(req.query.searchQuery))
+      .then(listings => {
+        res.json(listings);
+      }).catch(error => {
+        res.send(error);
+      });
+  }
+);
+
+router.route('/getCategorisCounts').get(
+  function (req, res) {
+    AdsController.getCategorisCounts()
+      .then(categoryCounts => {
+        res.json(categoryCounts);
+      }).catch(error => {
+        res.send(error);
+      });
+  }
+);
+
+/*
+  router.route('/deleteDonorListing')
+    .post(
+      ensureAuthentication.userAuthentication,
+      function (req, res) {
+        console;
+        AdsController.deleteDonorListing(req.body.listingInfo)
+          .then(response => {
+            res.json(response);
+          }).catch(error => {
+            res.send(error);
+          });
+      }
+    );
+
+  router.route('/wannaHelp')
+    .post(
+      ensureAuthentication.userAuthentication,
+      function (req, res) {
+        AdsController.wannaHelp(req.body.listingInfo)
+          .then(response => {
+            res.json(response);
+          }).catch(error => {
+            res.send(error);
+          });
+      }
+    );
+*/
+module.exports = router;

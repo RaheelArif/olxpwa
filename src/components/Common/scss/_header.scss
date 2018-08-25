@@ -1,0 +1,55 @@
+
+header {
+  font-size: 20px;
+  .site-logo {
+    margin: auto 0;
+  }
+  .site-slogan {
+    margin: auto 0;
+    padding-left: 15px;
+  }
+  .menu-icon-container {
+    display: flex;
+    justify-content: flex-end;
+    // padding: 0;
+  }
+  .menu-icon {
+    margin: auto 0;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+div:focus {
+  outline: none !important;
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+  header {
+    .site-slogan {
+      font-size: 3vw;
+    }
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+
+}

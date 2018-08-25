@@ -1,0 +1,65 @@
+.my-account-page {
+  // border: 1px solid $border-color;
+  .left-menu {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    li {
+      border-bottom: 1px solid #ddd;
+      &:last-child {
+        border-bottom: none;
+      }
+      a {
+        display: inline-block;
+        width: 100%;
+        padding: 7px 15px;
+        // background-color: #f7f7f7;
+        // transition: background-color 0.5s;
+        &:hover {
+          // background-color: #e7e7e7;
+        } // border: 1px solid $border-color;
+      }
+    }
+  }
+}
+
+.single-message-container {
+  border: 1px solid $border-color;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 5px;
+  h4 {
+    text-decoration: underline;
+  }
+  p {
+    margin:0;
+  }
+  .sent-date {
+    font-style: italic;
+  }
+  .sender-description {
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .message-body {
+    margin-top: 5px;
+    white-space: pre-wrap;
+  }
+  .delete-btn {
+    border: 1px solid $border-color;
+    padding: 7px 15px;
+    background-color: rgb(243, 176, 176);
+    display: inline-block;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(243, 200, 200);
+    }
+  }
+}

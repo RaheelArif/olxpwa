@@ -1,0 +1,29 @@
+.btn {
+  display: inline-block;
+  margin: .5rem;
+  // margin-right: .5rem;
+  border-radius: 3px;
+  padding: .5rem 1rem;
+  font-weight: bold;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.btn-custom-orange {
+  background-color: $orange-color;
+  color: #fff;
+  &:hover {
+    color: #fff;
+    background-color: $orange-color-hover;
+  }
+}
+
+.btn-custom-hollow {
+  background-color: transparent;
+  color: $blue-color;
+  border: 1px solid #ddd;
+  &:hover {
+    color: $orange-color;
+  }
+}
