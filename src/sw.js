@@ -40,25 +40,31 @@ self.addEventListener('activate', function (e) {
 
 
 self.addEventListener('fetch', function (e) {
-  e.respondWith(
-    caches.match(e.request.url)
-      .then(function (response) {
-        if (response) {
-          // initiate a request to update the cached version for next use.
-          updateCache(e.request);
-          // return the cached version.
-          return response;
-        }
+  if (navigator.onLine && e.request.method.toLowerCase() !== "get") {
+    e.respondWith(
+      fetch(e.request)
+    )
+  } else {
+    e.respondWith(
+      caches.match(e.request.url)
+        .then(function (response) {
+          if (response) {
+            // initiate a request to update the cached version for next use.
+            updateCache(e.request);
+            // return the cached version.
+            return response;
+          }
 
 
-        if (!navigator.onLine && e.request.method.toLowerCase() !== "get") {
-          // console.log('no internet to perform the request at', e.request);
-          return caches.match(new Request('/assets/js/offline.json'));
-        } else {
-          return fetchAndUpdate(e.request);
-        }
-      })
-  );
+          if (!navigator.onLine) {
+            // console.log('no internet to perform the request at', e.request);
+            return caches.match(new Request('/assets/js/offline.json'));
+          } else {
+            return fetchAndUpdate(e.request);
+          }
+        })
+    );
+  }
 });
 
 function fetchAndUpdate(request) {
@@ -88,15 +94,15 @@ function updateCache(request) {
         if (request.url.indexOf(filename) !== -1) {
           // Static asset request
           caches.open(cacheName)
-          .then(function(cache) {
-            cache.put(request, res.clone());
-          });
+            .then(function (cache) {
+              cache.put(request, res.clone());
+            });
         } else {
           // Dynamic asset request, store in DataCache
           caches.open(cacheDataName)
-          .then(function(cache) {
-            cache.put(request, res.clone());
-          })
+            .then(function (cache) {
+              cache.put(request, res.clone());
+            })
         }
       });
     });

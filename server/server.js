@@ -6,7 +6,11 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const compression = require('compression');
 
-mongoose.connect('mongodb://localhost/olxPakistan', { useNewUrlParser: true });
+// mongoose.connect('mongodb://localhost/olxPakistan', { useNewUrlParser: true });
+mongoose.connect(
+  'mongodb+srv://sufaidPoshUser:8YeURhPsQbZel9Ej@sufaidposh-zrtrp.mongodb.net/sufaidposh?retryWrites=true',
+  { useNewUrlParser: true }
+);
 const app = express();
 /*
 const corsOptions = {

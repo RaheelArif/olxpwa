@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"olxPakistan.users"},{"v":2,"unique":true,"key":{"email":1},"name":"email_1","ns":"olxPakistan.users","background":true}],"uuid":"44effa3c761d40c7860812bd86c5c421"}
