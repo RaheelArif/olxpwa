@@ -10,7 +10,7 @@
     "heroku-postbuild": "echo this runs after Heroku installs your dependencies.",
     "preinstall": "node tools/nodeVersionCheck.js",
     "start-message": "babel-node tools/startMessage.js",
-    "prestart": "npm run start-message",
+    "deleted:prestart": "npm run start-message",
     "start": "node server/server.js",
     "start:dev": "npm run open:src",
     "start:original": "concurrently -k -r -s first \"npm run test:watch\" \"npm run open:src\" \"npm run lint:watch\"",
