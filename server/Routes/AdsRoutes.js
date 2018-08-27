@@ -45,7 +45,10 @@ router.route('/submitAd').post(
         let maxImagesAllowed = 4;
         for (let x = 1; x <= maxImagesAllowed; x++) {
           if (files[`image-${x}`]) {
-            let nameArr = files[`image-${x}`].path.split('\\');
+            // at local side, filename contains "\" for separator but at server side
+            // filename contains "/" for separation, so first replace all "\" to "/"
+            let filename = files[`image-${x}`].path.replace(/\\/g, '/');
+            let nameArr = filename.split('/');
             let fName = nameArr[nameArr.length - 1];
             if (files[`image-${x}`].size >= 1) {
               imgNames.push(fName);
