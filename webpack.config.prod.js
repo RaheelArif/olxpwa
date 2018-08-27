@@ -48,20 +48,10 @@ export default {
         toType: 'file'
       },
       {
-        from: 'node_modules/sw-toolbox/**',
-        toType: 'dir'
+        from: '**',
+        to: 'assets/plugins/sw-toolbox',
+        context: 'node_modules/sw-toolbox/'
       },
-      // {
-      //   from: 'node_modules/sw-toolbox/**/*',
-      //   to: 'assets/plugins/sw-toolbox/',
-      //   toType: 'dir'
-      // },
-      // {
-      //   from: 'node_modules/sw-toolbox/**/**/*',
-      //   to: 'assets/plugins/sw-toolbox/',
-      //   toType: 'dir'
-      // }
-
     ],
       {}
     ),

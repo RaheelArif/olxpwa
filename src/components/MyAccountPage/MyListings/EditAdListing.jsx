@@ -6,7 +6,7 @@ import * as adActions from '../../../actions/AdActions';
 import PostAdForm from '../../PostAdPage/PostAdForm';
 import uf from '../../../constants/UtilityFunctions';
 // import cloneDeep from 'lodash/cloneDeep';
-import lodash from 'lodash';
+// import lodash from 'lodash';
 // import objectAssign from 'object-assign';
 
 class EditListingPage extends Component {
@@ -19,8 +19,7 @@ class EditListingPage extends Component {
     };
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    console.log('nextProps in Edit Listing Page', nextProps);
+  static getDerivedStateFromProps(nextProps) {
     if(nextProps.myAds) {
       return {myAds: nextProps.myAds, adId: nextProps.match.params.id}
     }
@@ -40,6 +39,22 @@ class EditListingPage extends Component {
     if (adListing && adListing.title) {
       // if found, then it will be a reference to the ad in the store, so need to clone it before performing anything on it.
       // otherwise a state mutation error will occur on modification.
+
+      // to avoid state mutation, we need a copy of the listing but not the exact reference.
+      // so listing without JSON.parse(JSON.stringify(listing)); will give us the reference but not
+      // the new copy of the listing, that is why I made a copy by first converting it to string and then
+      // converting back to the object.
+
+      // let adCopyWithoutItsReferance = JSON.parse(JSON.stringify(this.state.ad));
+
+      // alternatively, the same effect can be obtained by ObjectAssign
+      // let newAd = objectAssign({}, adListing);
+      // this does not work on this object as it involves deep objects, so it
+      // does not merge them properly.
+
+      // We can use lodash library to obtain the same functionality.
+      // let adCopyWithoutItsReferance = lodash.cloneDeep(adListing);
+      // console.log('cloned object to pass to <form> component </form>',adCopyWithoutItsReferance);
       let adCopyWithoutItsReferance = JSON.parse(JSON.stringify(adListing));
       this.setState({ ad: adCopyWithoutItsReferance });
     } else {
@@ -77,23 +92,6 @@ class EditListingPage extends Component {
   }
 
   render() {
-
-    // to avoid state mutation, we need a copy of the listing but not the exact reference.
-    // so listing without JSON.parse(JSON.stringify(listing)); will give us the reference but not
-    // the new copy of the listing, that is why I made a copy by first converting it to string and then
-    // converting back to the object.
-
-    // JSON.stringify and JSON.parse does not produce the new Object on mobile devices
-    // let adCopyWithoutItsReferance = JSON.parse(JSON.stringify(this.state.ad));
-
-    // alternatively, the same effect can be obtained by ObjectAssign
-    // this does not work on this object as it involves deep objects, so it
-    // does not merge them properly.
-    // let newAd = objectAssign({}, adListing);
-
-    // Using lodash library to obtain the same functionality.
-    // let adCopyWithoutItsReferance = lodash.cloneDeep(adListing);
-    // console.log('cloned object to pass to <form> component </form>',adCopyWithoutItsReferance);
 
     if (this.state.ad && !this.state.ad.category) {
       return (

@@ -1,4 +1,4 @@
-importScripts('node_modules/sw-toolbox/sw-toolbox.js');
+importScripts('assets/plugins/sw-toolbox/sw-toolbox.js');
 
 const swCaches = {
   'static': 'olx-pakistan',
@@ -52,6 +52,7 @@ toolbox.router.get('/assets/*', toolbox.cacheFirst, {
     maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
   }
 });
+
 toolbox.router.get('/index.html', toolbox.cacheFirst, {
   cache: {
     name: swCaches.static,
