@@ -21,30 +21,30 @@ class Footer extends Component {
       <footer>
         <div className="container">
           <div className="row">
-            <div className="col-12 col-sm-2">
+            <div className="col-12 col-sm-2 mb-3 mb-md-0">
               <img src={olxLogo} alt={`OLX Pakistan`} />
             </div>
-            <div className="col-12 col-sm-2">
+            <div className="col-6 col-sm-2">
               <ul className="list-unstyled">
                 <li><Link to="#">Location Map</Link></li>
                 <li><Link to="#">Popular Searches</Link></li>
                 <li><Link to="#">Sitemap</Link></li>
               </ul>
             </div>
-            <div className="col-12 col-sm-2">
+            <div className="col-6 col-sm-2">
               <ul className="list-unstyled">
                 <li><Link to="#">Terms of Use</Link></li>
                 <li><Link to="#">Help &amp; Contact Us</Link></li>
               </ul>
             </div>
-            <div className="col-12 col-sm-2">
+            <div className="col-6 col-sm-2">
               <ul className="list-unstyled">
                 <li><Link to="#">Who we are <i className="fa fa-arrow-down"></i></Link></li>
                 <li><Link to="#">Join OLX</Link></li>
                 <li><Link to="#">Happy OLXers</Link></li>
               </ul>
             </div>
-            <div className="col-12 col-sm-4">
+            <div className="col-6 col-sm-4">
               <ul className="list-unstyled">
                 <li><h4>Contact Us</h4></li>
                 <li><a href="mailto:help@olx.com.pk">help@olx.com.pk</a></li>

@@ -15,6 +15,10 @@ header {
   }
   .menu-icon {
     margin: auto 0;
+    background-color: #ff7a01;
+    &:hover {
+      background-color: #572983;
+    }
     &:focus {
       outline: none;
     }

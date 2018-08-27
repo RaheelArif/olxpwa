@@ -2,6 +2,9 @@
 logs
 *.log*
 
+# Map files
+*.map
+
 # Runtime data
 pids
 *.pid
@@ -40,13 +43,11 @@ node_modules
 .DS_Store
 
 # extra files
--- extra/**/*
--- extra/**/**/*
--- extra/*
+-- extras/*
 mockup
 #sass cache
 **.sass-cache
 
-server/uploads/listings/images
+server/uploads/ads/images
 
 package-lock.json

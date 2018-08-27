@@ -5,19 +5,37 @@ import { bindActionCreators } from 'redux';
 import * as adActions from '../../../actions/AdActions';
 import PostAdForm from '../../PostAdPage/PostAdForm';
 import uf from '../../../constants/UtilityFunctions';
-
+// import cloneDeep from 'lodash/cloneDeep';
+import lodash from 'lodash';
 // import objectAssign from 'object-assign';
 
 class EditListingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // myListings: props.myListings
+      ad: {}
     };
   }
 
+  componentDidMount = () => {
+    let adListing = uf.getAdById(this.props.myAds, this.props.match.params.id);
+    if (adListing && adListing.title) {
+      // if found, then it will be a reference to the ad in the store, so need to clone it before performing anything on it.
+      // otherwise a state mutation error will occur on modification.
+      let adCopyWithoutItsRefance = JSON.parse(JSON.stringify(adListing));
+      this.setState({ ad: adCopyWithoutItsRefance });
+    } else {
+      uf.getAdByIdFromServer(this.props.match.params.id)
+        .then(ad => {
+          // it will be already an independent object so no need to create a copy of it. again.
+          this.setState({ ad: ad });
+        });
+    }
+  }
+
+
   synchAdListingWithUi = (adListing) => {
-    if(!adListing.title) {
+    if (!adListing.title) {
       return adListing;
     }
     // convert back the listing according to the ui.
@@ -41,26 +59,39 @@ class EditListingPage extends Component {
   }
 
   render() {
-    let adListing = uf.getAdById(this.props.myAds, this.props.match.params.id);
+
     // to avoid state mutation, we need a copy of the listing but not the exact reference.
     // so listing without JSON.parse(JSON.stringify(listing)); will give us the reference but not
     // the new copy of the listing, that is why I made a copy by first converting it to string and then
     // converting back to the object.
-    let adCopyWithoutItsRefance = JSON.parse(JSON.stringify(adListing));
+
+    // JSON.stringify and JSON.parse does not produce the new Object on mobile devices
+    // let adCopyWithoutItsRefance = JSON.parse(JSON.stringify(this.state.ad));
 
     // alternatively, the same effect can be obtained by ObjectAssign
     // this does not work on this object as it involves deep objects, so it
     // does not merge them properly.
     // let newAd = objectAssign({}, adListing);
-    let ad = this.synchAdListingWithUi(adCopyWithoutItsRefance);
-    if (!ad) {
-      ad = {};
+
+    // Using lodash library to obtain the same functionality.
+    // let adCopyWithoutItsRefance = lodash.cloneDeep(adListing);
+    // console.log('cloned object to pass to <form> component </form>',adCopyWithoutItsRefance);
+
+    if (this.state.ad && !this.state.ad.title) {
+      return (
+        <div className="container"><i className="fa fa-spinner rotate"></i> Loading...</div>
+      )
+    } else {
+      let ad = this.synchAdListingWithUi(this.state.ad);
+      if (!ad) {
+        ad = {};
+      }
+      return (
+        <PostAdForm serverAction={this.props.actions.updateAd}
+          ad={ad} pageTitle="Edit Ad" buttonLabel="Update Ad"
+        />
+      );
     }
-    return (
-      <PostAdForm serverAction={this.props.actions.updateAd}
-        ad={ad} pageTitle="Edit Ad" buttonLabel="Update Ad"
-      />
-    );
   }
 }
 

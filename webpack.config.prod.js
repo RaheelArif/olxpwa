@@ -36,7 +36,32 @@ export default {
         from: 'src/assets/js/offline.json',
         to: 'assets/js/offline.json',
         toType: 'file'
-      }
+      },
+      {
+        from: 'src/assets/img/icons-192.png',
+        to: 'assets/img/icons-192.png',
+        toType: 'file'
+      },
+      {
+        from: 'src/assets/img/icons-512.png',
+        to: 'assets/img/icons-512.png',
+        toType: 'file'
+      },
+      {
+        from: 'node_modules/sw-toolbox/**',
+        toType: 'dir'
+      },
+      // {
+      //   from: 'node_modules/sw-toolbox/**/*',
+      //   to: 'assets/plugins/sw-toolbox/',
+      //   toType: 'dir'
+      // },
+      // {
+      //   from: 'node_modules/sw-toolbox/**/**/*',
+      //   to: 'assets/plugins/sw-toolbox/',
+      //   toType: 'dir'
+      // }
+
     ],
       {}
     ),
@@ -72,7 +97,7 @@ export default {
     }),
 
     // Minify JS
-    new webpack.optimize.UglifyJsPlugin({ sourceMap: false }),
+    new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),
   ],
   module: {
     rules: [
