@@ -130,8 +130,11 @@ router.route('/updateAdListing').post(
         let maxImagesAllowed = 4;
         for (let x = 1; x <= maxImagesAllowed; x++) {
           if (files[`image-${x}`]) {
-            let nameArr = files[`image-${x}`].path.split('\\');
+            let filename = files[`image-${x}`].path.replace(/\\/g, '/');
+            let nameArr = filename.split('/');
             let fName = nameArr[nameArr.length - 1];
+            // let nameArr = files[`image-${x}`].path.split('\\');
+            // let fName = nameArr[nameArr.length - 1];
             if (files[`image-${x}`].size >= 1) {
               imgNames.push(fName);
             } else {

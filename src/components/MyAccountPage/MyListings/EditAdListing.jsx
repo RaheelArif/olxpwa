@@ -13,17 +13,35 @@ class EditListingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ad: {}
+      ad: {},
+      myAds: [],
+      adId: '',
     };
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('nextProps in Edit Listing Page', nextProps);
+    if(nextProps.myAds) {
+      return {myAds: nextProps.myAds, adId: nextProps.match.params.id}
+    }
+    return null;
+  }
+
   componentDidMount = () => {
-    let adListing = uf.getAdById(this.props.myAds, this.props.match.params.id);
+    this.setAdToComponentState();
+  }
+
+  componentDidUpdate = () => {
+    // this.setAdToComponentState();
+  }
+
+  setAdToComponentState = () => {
+    let adListing = uf.getAdById(this.state.myAds, this.state.adId);
     if (adListing && adListing.title) {
       // if found, then it will be a reference to the ad in the store, so need to clone it before performing anything on it.
       // otherwise a state mutation error will occur on modification.
-      let adCopyWithoutItsRefance = JSON.parse(JSON.stringify(adListing));
-      this.setState({ ad: adCopyWithoutItsRefance });
+      let adCopyWithoutItsReferance = JSON.parse(JSON.stringify(adListing));
+      this.setState({ ad: adCopyWithoutItsReferance });
     } else {
       uf.getAdByIdFromServer(this.props.match.params.id)
         .then(ad => {
@@ -66,7 +84,7 @@ class EditListingPage extends Component {
     // converting back to the object.
 
     // JSON.stringify and JSON.parse does not produce the new Object on mobile devices
-    // let adCopyWithoutItsRefance = JSON.parse(JSON.stringify(this.state.ad));
+    // let adCopyWithoutItsReferance = JSON.parse(JSON.stringify(this.state.ad));
 
     // alternatively, the same effect can be obtained by ObjectAssign
     // this does not work on this object as it involves deep objects, so it
@@ -74,12 +92,14 @@ class EditListingPage extends Component {
     // let newAd = objectAssign({}, adListing);
 
     // Using lodash library to obtain the same functionality.
-    // let adCopyWithoutItsRefance = lodash.cloneDeep(adListing);
-    // console.log('cloned object to pass to <form> component </form>',adCopyWithoutItsRefance);
+    // let adCopyWithoutItsReferance = lodash.cloneDeep(adListing);
+    // console.log('cloned object to pass to <form> component </form>',adCopyWithoutItsReferance);
 
-    if (this.state.ad && !this.state.ad.title) {
+    if (this.state.ad && !this.state.ad.category) {
       return (
-        <div className="container"><i className="fa fa-spinner rotate"></i> Loading...</div>
+        <div className="container">
+          <i className="fa fa-spinner rotate"></i> Loading...
+        </div>
       )
     } else {
       let ad = this.synchAdListingWithUi(this.state.ad);
@@ -119,6 +139,5 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(adActions, dispatch)
   };
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditListingPage);
