@@ -53,7 +53,11 @@ const AdSchema = new Schema({
   approved: {
     type: Boolean,
     default: true,
-  }
+  },
+  favorites: {
+    type: [String],
+    default: []
+  },
 },
 {
   timestamps: true

@@ -13,6 +13,7 @@ import MessageIcon from '@material-ui/icons/Message';
 import ListIcon from '@material-ui/icons/List';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AddIcon from '@material-ui/icons/AddBoxRounded';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const styles = theme => ({
   root: {
@@ -26,55 +27,66 @@ const styles = theme => ({
 });
 
 const LeftMenu = (props) => {
-  const {classes} = props;
+  const { classes } = props;
   return (
     <div className={classes.root}>
-        <List
-          component="nav"
-        >
-          <ListItem>
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <ListItemText>
-              <Link to="/my-account">My Account</Link>
-            </ListItemText>
-          </ListItem>
+      <List
+        component="nav"
+      >
+        <ListItem>
+          <ListItemIcon>
+            <AccountCircleIcon />
+          </ListItemIcon>
+          <ListItemText>
+            <Link to="/my-account">My Account</Link>
+          </ListItemText>
+        </ListItem>
 
-          <Divider />
+        <Divider />
 
-          <ListItem>
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText>
-              <Link to="/post-your-ad">Post Your Ad</Link>
-            </ListItemText>
-          </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <AddIcon />
+          </ListItemIcon>
+          <ListItemText>
+            <Link to="/post-your-ad">Post Your Ad</Link>
+          </ListItemText>
+        </ListItem>
 
-          <Divider />
+        <Divider />
 
-          <ListItem>
-            <ListItemIcon>
-              <ListIcon />
-            </ListItemIcon>
-            <ListItemText>
-              <Link to="/my-account/ads">Ad Listings</Link>
-            </ListItemText>
-          </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <ListIcon />
+          </ListItemIcon>
+          <ListItemText>
+            <Link to="/my-account/ads">Ad Listings</Link>
+          </ListItemText>
+        </ListItem>
 
-          <Divider />
+        <Divider />
 
-          <ListItem>
-            <ListItemIcon>
-              <MessageIcon />
-            </ListItemIcon>
-            <ListItemText>
-              <Link to="/my-account/messages">Messages</Link>
-            </ListItemText>
-          </ListItem>
-        </List>
-      </div>
+        <ListItem>
+          <ListItemIcon>
+            <MessageIcon />
+          </ListItemIcon>
+          <ListItemText>
+            <Link to="/my-account/messages">Messages</Link>
+          </ListItemText>
+        </ListItem>
+
+        <Divider />
+
+        <ListItem>
+          <ListItemIcon>
+            <FavoriteIcon />
+          </ListItemIcon>
+          <ListItemText>
+            <Link to="/my-account/saved-ads">Saved Ads</Link>
+          </ListItemText>
+        </ListItem>
+      </List>
+    </div>
     // <ul className="left-menu">
     //   <li><Link to="/my-account/ads">My Ads Listings</Link></li>
     //   <li><Link to="/my-account/messages">Messages</Link></li>

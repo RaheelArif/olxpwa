@@ -3,6 +3,8 @@ import { routerReducer } from 'react-router-redux';
 import allAdsReducer from './allAdsReducer';
 import myAdsReducer from './myAdsReducer';
 import myMessagesReducer from './myMessagesReducer';
+import savedAdsReducer from './savedAdsReducer';
+
 import catCounts from './catCountReducer';
 // import people from "./peopleReducer";
 // import registrations from "./registrationReducer";
@@ -18,6 +20,7 @@ const rootReducer = combineReducers({
   myAds: myAdsReducer,
   myMessages: myMessagesReducer,
   categoryCounts: catCounts,
+  savedAds: savedAdsReducer,
 });
 
 export default rootReducer;

@@ -18,7 +18,7 @@ import Breadcrumb from '../Common/Breadcrumb';
 import uf from '../../constants/UtilityFunctions';
 
 import { isEmpty, isNumeric } from 'validator';
-import { API_URL } from '../../constants/constants';
+import { API_URL, MAX_PRODUCT_PRICE } from '../../constants/constants';
 
 const styles = theme => ({
   button: {
@@ -170,6 +170,9 @@ class PostAdForm extends Component {
     } else if (ad.adTitle.length < 3) {
       errors.adTitle = "Please provide a valid ad title";
       valid = false;
+    } else if (ad.adTitle.length > 50) {
+      errors.adTitle = "Title is too long";
+      valid = false;
     }
 
     if (isEmpty(ad.category)) {
@@ -179,6 +182,9 @@ class PostAdForm extends Component {
 
     if (isEmpty(ad.model)) {
       errors.model = "Please provide a model";
+      valid = false;
+    } else if (ad.model.length > 50) {
+      errors.model = "Model is too long, max characters allowed is 50";
       valid = false;
     }
 
@@ -193,13 +199,23 @@ class PostAdForm extends Component {
     } else if (!isNumeric(ad.price)) {
       errors.price = "price should be in numbers";
       valid = false;
+    } else if (ad.price > MAX_PRODUCT_PRICE) {
+      errors.price = `We don't deal with products haveing prices higher than ${MAX_PRODUCT_PRICE}`;
+      valid = false;
     }
 
+    let maxDescriptionChars = 1200;
     if (isEmpty(ad.adDescription)) {
       errors.adDescription = "Please provide ad description";
       valid = false;
     } else if (ad.adDescription.length < 50) {
       errors.adDescription = "Ad description is not enough, please provide detailed description";
+      valid = false;
+    } else if (ad.adDescription.length > maxDescriptionChars) {
+      errors.adDescription = `Ad description is too long, please provide breif description within the ${maxDescriptionChars} characters`;
+      valid = false;
+    } else if(!uf.isValidInput(ad.adDescription)){
+      errors.adDescription = `Invalid description, please provide valid description`;
       valid = false;
     }
 
@@ -212,7 +228,7 @@ class PostAdForm extends Component {
     if (isEmpty(ad.sellerName)) {
       errors.sellerName = "Please provide seller's name is required";
       valid = false;
-    } else if (ad.sellerName.length < 3) {
+    } else if (ad.sellerName.length < 3 || ad.sellerName.length > 50) {
       errors.sellerName = "Please provide a valid seller name";
       valid = false;
     }

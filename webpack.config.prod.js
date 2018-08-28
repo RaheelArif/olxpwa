@@ -87,7 +87,7 @@ export default {
     }),
 
     // Minify JS
-    new webpack.optimize.UglifyJsPlugin({ sourceMap: false }),
+    new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),
   ],
   module: {
     rules: [

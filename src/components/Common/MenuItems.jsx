@@ -15,6 +15,7 @@ import AddIcon from '@material-ui/icons/AddBoxRounded';
 import MessageIcon from '@material-ui/icons/Message';
 import ListIcon from '@material-ui/icons/List';
 import HomeIcon from '@material-ui/icons/Home';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const styles = theme => ({
   button: {
@@ -84,31 +85,32 @@ class MenuItems extends Component {
                 </ListItemIcon>
                 <Link to="/post-your-ad" onClick={toggleDrawer(false)}>Post an Ad</Link>
               </ListItem>
-              <Divider />
-            </div>
-          }
 
-          {
-            this.state.authenticated &&
-            <div>
+              <Divider />
+
               <ListItem>
                 <ListItemIcon>
                   <ListIcon />
                 </ListItemIcon>
                 <Link to="/my-account/ads" onClick={toggleDrawer(false)}>My Ad Listings</Link>
               </ListItem>
-              <Divider />
-            </div>
-          }
 
-          {
-            this.state.authenticated &&
-            <div>
+              <Divider />
+
               <ListItem>
                 <ListItemIcon>
                   <MessageIcon />
                 </ListItemIcon>
                 <Link to="/my-account/messages" onClick={toggleDrawer(false)}>Messages</Link>
+              </ListItem>
+
+              <Divider />
+
+              <ListItem>
+                <ListItemIcon>
+                  <FavoriteIcon />
+                </ListItemIcon>
+                <Link to="/my-account/saved-ads" onClick={toggleDrawer(false)}>Saved Ads</Link>
               </ListItem>
               <Divider />
             </div>
@@ -116,19 +118,19 @@ class MenuItems extends Component {
 
           {
             this.state.authenticated ?
-            <ListItem>
-              <ListItemIcon>
-                <LogoutIcon />
-              </ListItemIcon>
-              <Link to="/#" onClick={() => { handleLogout(); toggleDrawer(false) }}>Logout</Link>
-            </ListItem>
-            :
-            <ListItem>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <Link to="/login" onClick={toggleDrawer(false)}>Login</Link>
-            </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <Link to="/#" onClick={() => { handleLogout(); toggleDrawer(false) }}>Logout</Link>
+              </ListItem>
+              :
+              <ListItem>
+                <ListItemIcon>
+                  <PersonIcon />
+                </ListItemIcon>
+                <Link to="/login" onClick={toggleDrawer(false)}>Login</Link>
+              </ListItem>
           }
 
           <Divider />
@@ -143,7 +145,7 @@ MenuItems.propTypes = {
   classes: PropTypes.object,
   authenticated: PropTypes.bool,
   handleLogout: PropTypes.func,
-  toggleDrawer:PropTypes.func,
+  toggleDrawer: PropTypes.func,
 }
 
 function mapStateToProps(state) {

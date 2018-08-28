@@ -59,8 +59,16 @@ const UtilityFunctions = {
     let month = months[date.getMonth()];
     let dateTime = `${month} ${date.getDate()}, ${date.getFullYear()}`;
     return dateTime;
-  }
+  },
 
+  isValidInput: function(description) {
+    let arr = description.split(' ');
+    let wrongWords = arr.filter(word => word.length > 18 ? true : false);
+    if(wrongWords.length > 0)
+      return false;
+    else
+      return true;
+  }
 };
 
 export default UtilityFunctions;

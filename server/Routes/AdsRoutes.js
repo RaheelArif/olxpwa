@@ -92,6 +92,18 @@ router.route('/getAdById').get(
   }
 );
 
+router.route('/viewLater').post(
+  // ensureAuthentication.userOrAdminAuthentication,
+  function (req, res) {
+    AdsController.viewLater(req.body.userId, req.body.adId)
+      .then(message => {
+        res.json(message);
+      }).catch(error => {
+        res.send(error);
+      });
+  }
+)
+
 /*
 router.route('/getMyListings').get(
   ensureAuthentication.userAuthentication,
@@ -199,32 +211,17 @@ router.route('/getCategorisCounts').get(
   }
 );
 
-/*
-  router.route('/deleteDonorListing')
-    .post(
-      ensureAuthentication.userAuthentication,
-      function (req, res) {
-        console;
-        AdsController.deleteDonorListing(req.body.listingInfo)
-          .then(response => {
-            res.json(response);
-          }).catch(error => {
-            res.send(error);
-          });
-      }
-    );
+router.route('/removeSavedAd').post(
+  // ensureAuthentication.userOrAdminAuthentication,
+  function (req, res) {
+    console;
+    AdsController.removeSavedListing(req.body.userId, req.body.adId)
+      .then(resp => {
+        res.json(resp.message);
+      }).catch(error => {
+        res.send(error);
+      });
+  }
+);
 
-  router.route('/wannaHelp')
-    .post(
-      ensureAuthentication.userAuthentication,
-      function (req, res) {
-        AdsController.wannaHelp(req.body.listingInfo)
-          .then(response => {
-            res.json(response);
-          }).catch(error => {
-            res.send(error);
-          });
-      }
-    );
-*/
 module.exports = router;

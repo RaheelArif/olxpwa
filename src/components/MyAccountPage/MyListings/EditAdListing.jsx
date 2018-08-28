@@ -28,11 +28,7 @@ class EditListingPage extends Component {
 
   componentDidMount = () => {
     this.setAdToComponentState();
-  }
-
-  componentDidUpdate = () => {
-    // this.setAdToComponentState();
-  }
+  };
 
   setAdToComponentState = () => {
     let adListing = uf.getAdById(this.state.myAds, this.state.adId);
@@ -64,7 +60,7 @@ class EditListingPage extends Component {
           this.setState({ ad: ad });
         });
     }
-  }
+  };
 
 
   synchAdListingWithUi = (adListing) => {
@@ -89,7 +85,7 @@ class EditListingPage extends Component {
     delete (adListing.approved);
 
     return adListing;
-  }
+  };
 
   render() {
 

@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import { API_URL } from '../../constants/constants';
 // import DeleteIcon from '@material-ui/icons/Delete';
-import WatchLaterIcon from '@material-ui/icons/WatchLater';
+import SaveToViewLater from '../../components/Common/SaveToViewLater';
+import RemoveSaved from '../../components/Common/RemoveSaved';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteAd from '../Common/DeleteAd';
 
 const AllAds = (props) => {
-  const { allAds, filterCategory, title, userId } = props;
+  const { allAds, filterCategory, title, userId, removeSaved } = props;
   const pageTitle = (title && title.length > 0) ? title : `Displaying ${filterCategory ? filterCategory : `All`} ads`;
   const adsListings = allAds.slice(0, 10).map((ad, index) => {
     let owner = false;
@@ -33,7 +34,9 @@ const AllAds = (props) => {
                   <span className="price">Rs. {ad.price}</span>
                 </div>
                 <div className="col-6 text-right">
-                  <a href="javascript:void(0)" title="Save to view later"><WatchLaterIcon /></a>
+                  {/* <a href="javascript:void(0)" title="Save to view later"><WatchLaterIcon /></a> */}
+                  {removeSaved && <RemoveSaved adId={ad._id} />}
+                  <SaveToViewLater adId={ad._id} />
                   {owner && <Link title="Edit" to={`/my-account/ads/edit/${ad._id}`} ><EditIcon /></Link>}
                   {owner && <DeleteAd adId={ad._id} />}
                 </div>
@@ -55,10 +58,16 @@ const AllAds = (props) => {
     </div>
   );
 };
+
+AllAds.defaultProps = {
+  removeSaved: false,
+}
+
 AllAds.propTypes = {
   allAds: PropTypes.array.isRequired,
   title: PropTypes.string,
   filterCategory: PropTypes.string,
-  userId: PropTypes.string
+  userId: PropTypes.string,
+  removeSaved: PropTypes.bool
 }
 export default AllAds;

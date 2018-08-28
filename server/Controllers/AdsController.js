@@ -1,6 +1,7 @@
 // const config = require('../serverConfig');
 const categories = require('../../src/constants/categories'); // array of categories
 const Ad = require('../Models/Ad');
+// const User = require('../Models/User');
 // const objectAssign = require('object-assign');
 // const isAlphanumeric = require('validator/lib/isAlphanumeric');
 // const isEmpty = require('validator/lib/isEmpty');
@@ -196,6 +197,30 @@ const AdController = {
       });
     });
   },
+
+  viewLater: function(userId, adId) {
+    return new Promise(function (resolve, reject) {
+      Ad.findOneAndUpdate({_id: adId}, {$addToSet: {favorites: userId}}, function(error, ad) {
+        if(error) {
+          reject({status: 'error', error: error});
+        }else{
+          resolve("Ad saved to view later");
+        }
+      });
+    });
+  },
+
+  removeSavedListing: function (userId, adId) {
+    return new Promise(function (resolve, reject) {
+      Ad.findOneAndUpdate({ _id: adId }, { $pull: { favorites: userId } }, function (error, ad) {
+        if (error) {
+          reject({ status: 'error', error: error });
+        } else if(ad) {
+          resolve({ status: 'ok', message: 'Ad listing removed from saved listings', error: null, ad: ad });
+        }
+      });
+    });
+  },
   /*
     wannaHelp: function (listingInfo) {
       const listingId = listingInfo.listingId;
@@ -237,7 +262,6 @@ const AdController = {
       });
     },
   */
-
 }
 
 module.exports = AdController;

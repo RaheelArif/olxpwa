@@ -66,19 +66,34 @@ toolbox.router.get('/favicon.ico', toolbox.cacheFirst, {
     maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
   }
 });
-
-toolbox.router.get('/*', function(request, values, options) {
-  return toolbox.networkFirst(request, values, options)
-  .catch(function(error){
-    return caches.match(new Request('/assets/js/offline.json'));
+/*
+// ads/getAdById/cache/5b7770a63bb8160d5476d715
+toolbox.router.get('/ads/getAdById/cache/5b7770a63bb8160d5476d715', function (request, values, options) {
+  console.log('route hit');
+  return fetch('ads/getAdById?adId=5b7770a63bb8160d5476d715')
+  .then(function(resp) {
+    return caches.open(swCaches.dynamic)
+    .then(function(cache) {
+      // store response in cache and thats it.
+      return cache.put(request, resp);
+    });
   })
 }, {
-  networkTimeoutSeconds: 1,
-  cache: {
-    name: swCaches.dynamic,
-    maxEntries: 500,
-  }
+
 });
+*/
+toolbox.router.get('/*', function (request, values, options) {
+  return toolbox.networkFirst(request, values, options)
+    .catch(function (error) {
+      return caches.match(new Request('/assets/js/offline.json'));
+    })
+}, {
+    networkTimeoutSeconds: 1,
+    cache: {
+      name: swCaches.dynamic,
+      maxEntries: 500,
+    }
+  });
 /*
 self.addEventListener('fetch', function (e) {
   if (navigator.onLine && e.request.method.toLowerCase() !== "get") {

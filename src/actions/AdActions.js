@@ -73,3 +73,38 @@ export function loadCategoriesCountsSuccess(catCounts) {
     payload: catCounts,
   }
 }
+
+export function adViewLater(adId) {
+  return {
+    type: types.AD_VIEW_LATER,
+    payload: adId
+  }
+}
+
+export function saveAdInCache(adId) {
+  return {
+    type: types.SAVE_AD_IN_CACHE,
+    payload: adId
+  }
+}
+
+export function loadSavedAds() {
+  return {
+    type: types.LOAD_SAVED_ADS,
+  }
+}
+
+export function loadSavedAdsSuccess(ads) {
+  return {
+    type: types.LOAD_SAVED_ADS_SUCCESS,
+    payload: ads
+  }
+}
+
+export function removeSaved(adId) {
+  return {
+    type: types.REMOVE_SAVED_AD,
+    payload: adId
+
+  }
+}

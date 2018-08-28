@@ -3,4 +3,5 @@ export default {
   myAdsListings: [],
   myMessages: [],
   catCounts: {},
+  savedAds: [],
 }

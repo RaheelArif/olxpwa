@@ -1,8 +1,8 @@
 // settings for front end
-// export const API_URL = "http://localhost:5005/";
-export const API_URL = "/";
+export const API_URL = "http://localhost:5005/";
+// export const API_URL = "/";
 export const allowedTitleChars = 105;
-
+export const MAX_PRODUCT_PRICE = 10000000;
 // USER ACTIONS
 export const LOGIN_USER = "LOGIN_USER";
 export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
@@ -25,7 +25,14 @@ export const DELETE_AD = "DELETE_AD";
 export const DELETE_AD_SUCCESS = "DELETE_AD_SUCCESS";
 export const LOAD_CATEGORIES_COUNTS = "LOAD_CATEGORIES_COUNTS";
 export const LOAD_CATEGORIES_COUNTS_SUCCESS = "LOAD_CATEGORIES_COUNTS_SUCCESS";
+export const LOAD_SAVED_ADS = "LOAD_SAVED_ADS";
+export const LOAD_SAVED_ADS_SUCCESS = "LOAD_SAVED_ADS_SUCCESS";
+export const REMOVE_SAVED_AD = "REMOVE_SAVED_AD";
 
+export const AD_VIEW_LATER = "AD_VIEW_LATER";
+export const AD_VIEW_LATER_SUCCESS = "AD_VIEW_LATER_SUCCESS";
+export const SAVE_AD_IN_CACHE = "SAVE_AD_IN_CACHE";
+export const SAVE_AD_IN_CACHE_SUCCESS = "SAVE_AD_IN_CACHE_SUCCESS";
 // MESSAGE ACTIONS
 export const SEND_MESSAGE = "SEND_MESSAGE";
 export const SEND_MESSAGE_SUCCESS = "SEND_MESSAGE_SUCCESS";

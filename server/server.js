@@ -6,21 +6,22 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const compression = require('compression');
 
-// mongoose.connect('mongodb://localhost/olxPakistan', { useNewUrlParser: true });
-mongoose.connect(
-  'mongodb+srv://sufaidPoshUser:8YeURhPsQbZel9Ej@sufaidposh-zrtrp.mongodb.net/sufaidposh?retryWrites=true',
-  { useNewUrlParser: true }
-);
+mongoose.connect('mongodb://localhost/olxPakistan', { useNewUrlParser: true });
+// mongoose.connect(
+//   'mongodb+srv://sufaidPoshUser:8YeURhPsQbZel9Ej@sufaidposh-zrtrp.mongodb.net/sufaidposh?retryWrites=true',
+//   { useNewUrlParser: true }
+// );
 const app = express();
-/*
+
 const corsOptions = {
-    origin: "http://localhost:5005",
+    // origin: "http://localhost:5005",
+    origin: "http://localhost:5010",
     methods: ['GET', 'POST'],
     credentials: true
 };
 app.use(cors(corsOptions));
-*/
-app.use(cors()); //allow cors for all origins
+
+// app.use(cors()); //allow cors for all origins
 // use compression library to optimize PWA
 app.use(compression());
 
@@ -81,4 +82,4 @@ app.use(function(error, req, resp, next){
 
 app.listen(config.port, function() {
     console.log('server is running on localhost:' + config.port); //eslint-disable-line
-})
+});

@@ -12,6 +12,7 @@ import PostAdPage from './components/PostAdPage/PostAdPageContainer';
 import MyAccountPage from './components/MyAccountPage/MyAccountPage';
 import MyMessagesPage from './components/MyAccountPage/MyMessages/MyMessages';
 import MyAdsPage from './components/MyAccountPage/MyListings/MyListings';
+import SavedListingsPage from './components/MyAccountPage/SavedAdListings/SavedListingsPage';
 import EditAdListingPage from './components/MyAccountPage/MyListings/EditAdListing';
 import UserAdsPage from './components/UserAdsPage/UserAdsPage';
 import CategoryAdsPage from './components/CategoryAdsPage/CategoryAdsPage';
@@ -46,6 +47,7 @@ class CustomRoutes extends React.Component {
           <PrivateRoute exact={true} path="/my-account/ads" component={MyAdsPage} />
           <PrivateRoute exact={true} path="/my-account/ads/edit/:id" component={EditAdListingPage} />
           <PrivateRoute exact={true} path="/my-account/messages" component={MyMessagesPage} />
+          <PrivateRoute exact={true} path="/my-account/saved-ads" component={SavedListingsPage} />
 
           <Route component={NotFoundPage} />
         </Switch>

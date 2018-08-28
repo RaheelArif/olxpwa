@@ -7,6 +7,12 @@ import uf from '../../constants/UtilityFunctions';
 import toastr from 'toastr';
 import { isEmpty, isNumeric } from 'validator';
 import * as messageActions from '../../actions/MessageActions';
+import * as adActions from '../../actions/AdActions';
+
+let combinedActions = {
+  ...messageActions,
+  ...adActions,
+};
 
 function resetContact() {
   return { name: '', contactNumber: '', message: '' };
@@ -122,6 +128,11 @@ class SingleListingPageContainer extends Component {
     });
   }
 
+
+  adViewLater = (adId) => {
+    this.props.actions.adViewLater(adId);
+  };
+
   render() {
     return (
       <SingleListingPage
@@ -133,6 +144,7 @@ class SingleListingPageContainer extends Component {
         handleOpenMessageDialog={this.handleOpenMessageDialog}
         handleSubmitContactForm={this.handleSubmitContactForm}
         handleChange={this.handleChange}
+        adViewLater={this.adViewLater}
       />
     );
   }
@@ -152,7 +164,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(messageActions, dispatch)
+    actions: bindActionCreators(combinedActions, dispatch)
   };
 }
 

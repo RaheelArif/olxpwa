@@ -20,7 +20,7 @@ const SingleListingPage = (props) => {
   const {
     state, toggleLightbox, next, previous,
     handleOpenMessageDialog, handleCloseMessageDialog,
-    handleSubmitContactForm, handleChange
+    handleSubmitContactForm, handleChange, adViewLater
   } = props;
   const {
     photoIndex, isOpen, ad, openMessageDialog,
@@ -193,7 +193,7 @@ const SingleListingPage = (props) => {
                 <div className="divider"></div>
 
                 <div className="custom-listing-btn">
-                  <span><Link to="#"><i className="fa fa-clock-o"></i> Save to view later</Link></span>
+                  <span><a href="javascript:void(0)" onClick={() => adViewLater(ad._id)}><i className="fa fa-clock-o"></i> Save to view later</a></span>
                 </div>
 
                 <div>
@@ -293,6 +293,7 @@ SingleListingPage.propTypes = {
   handleCloseMessageDialog: PropTypes.func,
   handleSubmitContactForm: PropTypes.func,
   handleChange: PropTypes.func,
-}
+  adViewLater: PropTypes.func,
+};
 
 export default SingleListingPage;

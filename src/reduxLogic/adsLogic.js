@@ -104,7 +104,7 @@ const searchAdsLogic = createLogic({
       })
       .then(() => done());
   }
-})
+});
 
 // deleting an Ad listing
 const deleteAdListingLogic = createLogic({
@@ -184,6 +184,98 @@ const getCategorisCountsLogic = createLogic({
   }
 });
 
+const viewAdLaterLogic = createLogic({
+  type: types.AD_VIEW_LATER,
+  validate({ getState, action }, allow) {
+    let state = getState();
+    if (!state.session.authenticated || !state.session.user.id) {
+      toastr.error('You are not logged in, please login to save an ad to view later');
+    } else {
+      allow(action);
+    }
+  },
+
+  process: function({getState, action}, dispatch, done) { //eslint-disable-line no-unused-vars
+    let state = getState();
+    let userId = state.session.user.id;
+    axios.post(url + 'ads/viewLater', {
+      adId: action.payload,
+      userId: userId
+    })
+      .then(() => {
+        // dispatch an action to save ad in cache
+        dispatch(adActions.saveAdInCache(action.payload));
+        toastr.success('Ad saved to view later, you will find it inside your account');
+      })
+      .catch(err => {
+        toastr.error(err);
+      })
+      .then(() => done());
+  }
+});
+
+const saveAdInCache = createLogic({
+  type: types.SAVE_AD_IN_CACHE,
+
+  process: function({getState, action}, dispatch, done) { //eslint-disable-line no-unused-vars
+    /*
+      this request will be intercepted in serviceWorker, and will not be sent to server,
+      there is no route to match to this request on server.
+    */
+    axios.get(url + 'ads/getAdById', {
+      params: {adId: action.payload}
+    })
+      .then(resp => resp.data.images)
+      .then(images => {
+        images.map(image => axios.get(`${url}image/${image}`));
+      })
+      .catch(err => {
+        toastr.error(err);
+      })
+      .then(() => done());
+  }
+});
+
+const loadSavedAdsLogic = createLogic({
+  type: types.LOAD_SAVED_ADS, // only apply this logic to this type
+
+  process: function ({getState, action}, dispatch, done) { // eslint-disable-line no-unused-vars
+    let state = getState();
+    let userId = state.session.user.id;
+    let filters = { favorites: userId };
+    axios.get(url + 'ads/filterAds', {
+      params: {filters: JSON.stringify(filters)}
+    })
+      .then(resp => {
+        dispatch(adActions.loadSavedAdsSuccess(resp.data));
+      })
+      .catch(err => {
+        toastr.error(err);
+      })
+      .then(() => done());
+  }
+});
+
+const removeSavedAdLogic = createLogic({
+  type: types.REMOVE_SAVED_AD, // only apply this logic to this type
+
+  process: function ({getState, action}, dispatch, done) { // eslint-disable-line no-unused-vars
+    let state = getState();
+    let userId = state.session.user.id;
+    axios.post(url + 'ads/removeSavedAd', {
+      adId: action.payload,
+      userId: userId
+    })
+      .then(resp => {
+        toastr.success(resp.data);
+        dispatch(adActions.loadSavedAds());
+      })
+      .catch(err => {
+        toastr.error(err);
+      })
+      .then(() => done());
+  }
+});
 // pollsLogic
 export default [
   submitAdLogic,
@@ -194,4 +286,8 @@ export default [
   updateAdListingLogic,
   deleteAdListingLogic,
   getCategorisCountsLogic,
+  viewAdLaterLogic,
+  saveAdInCache,
+  loadSavedAdsLogic,
+  removeSavedAdLogic,
 ];
