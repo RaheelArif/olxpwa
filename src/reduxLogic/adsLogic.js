@@ -128,6 +128,7 @@ const deleteAdListingLogic = createLogic({
         // }
         toastr.success(response.data.message);
         dispatch(adActions.loadMyAds());
+        dispatch(adActions.loadAllAds());
         // load listings again,
         // if (getState().session.user.userType == "seeker") {
         //   dispatch(listingActions.loadMyListings(getState().session.user));
@@ -174,8 +175,18 @@ const getCategorisCountsLogic = createLogic({
 
   process: function ({ action }, dispatch, done) { // eslint-disable-line no-unused-vars
     axios.get(url + 'ads/getCategorisCounts')
-      .then(resp => {
-        dispatch(adActions.loadCategoriesCountsSuccess(resp.data));
+      .then(resp => resp.data)
+      .then(data => {
+        let reqData = {};
+        let dataArr = Object.values(data);
+        // dataArr is having array of objects of the shape of [{_id: "Laptops", count: 1}, {_id: "Mobiles": 1}]
+        // required data shape => {"Laptops": 1, "Mobiles": 1}
+        dataArr.map(data => {
+          reqData[data._id] = data.count;
+        });
+        return reqData;
+      }).then(reqData => {
+        dispatch(adActions.loadCategoriesCountsSuccess(reqData));
       })
       .catch(err => {
         toastr.error(err);

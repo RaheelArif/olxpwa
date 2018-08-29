@@ -1,16 +1,12 @@
 const Message = require('../Models/Message');
 const isEmpty = require('validator/lib/isEmpty');
 const isNumeric = require('validator/lib/isNumeric');
-// const isAlphanumeric = require('validator/lib/isAlphanumeric');
-// const isEmail = require('validator/lib/isEmail');
 
 // function to validate the user registration on server side.
 function _validateMessage(messageObject) {
   let valid = true;
-  // let errors = this.resetErrors(); // reset errors before validating
   let contact = messageObject;
   let errors = {};
-  // let user = this.state.user;
   if (isEmpty(contact.name)) {
     errors.name = "Please provide your name";
     valid = false;
@@ -54,9 +50,7 @@ function _validateMessage(messageObject) {
   }
 }
 
-
 const MessageController = {
-
   sendMessage: function (messageObject) {
     return new Promise(function (resolve, reject) {
       let validation = _validateMessage(messageObject);

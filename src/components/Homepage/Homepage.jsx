@@ -18,7 +18,7 @@ const Homepage = ({ state, handleCategoryChange, categoryCounts }) => {
   const {category:filterCategory} = state;
   const categoryList = categories.map((category, index) => {
     return (
-      <li key={index}><Link to={`/category/${category}`}>{category}</Link> <span className="text-muted">({categoryCounts[category]})</span></li>
+      <li key={index}><Link to={`/category/${category}`}>{category}</Link> <span className="text-muted">({categoryCounts[category] ? categoryCounts[category] : 0})</span></li>
     );
   });
   return (

@@ -181,29 +181,27 @@ const AdController = {
 
   getCategorisCounts: function () {
     return new Promise(function (resolve, reject) {
-      let categoryCounts = {};
-      categories.map(function (cat, index) {
-        Ad.countDocuments({ category: cat }, function (error, count) {
-          if (error) {
-            reject(error);
-          } else {
-            categoryCounts[cat] = count;
-            // resolve({ status: 'ok', message: 'Your Ad Listing has been deleted', error: null });
-          }
-          if(index === categories.length - 1) {
-            resolve(categoryCounts);
-          }
-        });
+      Ad.aggregate([{
+        $group: {
+          _id: "$category",
+          count: {$sum: 1}
+        }
+      }]).exec(function(err, result){
+        if(err) {
+          reject(err);
+        }else{
+          resolve(result)
+        }
       });
     });
   },
 
-  viewLater: function(userId, adId) {
+  viewLater: function (userId, adId) {
     return new Promise(function (resolve, reject) {
-      Ad.findOneAndUpdate({_id: adId}, {$addToSet: {favorites: userId}}, function(error, ad) {
-        if(error) {
-          reject({status: 'error', error: error});
-        }else{
+      Ad.findOneAndUpdate({ _id: adId }, { $addToSet: { favorites: userId } }, function (error, ad) {
+        if (error) {
+          reject({ status: 'error', error: error });
+        } else if (ad) {
           resolve("Ad saved to view later");
         }
       });
@@ -215,53 +213,12 @@ const AdController = {
       Ad.findOneAndUpdate({ _id: adId }, { $pull: { favorites: userId } }, function (error, ad) {
         if (error) {
           reject({ status: 'error', error: error });
-        } else if(ad) {
+        } else if (ad) {
           resolve({ status: 'ok', message: 'Ad listing removed from saved listings', error: null, ad: ad });
         }
       });
     });
   },
-  /*
-    wannaHelp: function (listingInfo) {
-      const listingId = listingInfo.listingId;
-      const userId = listingInfo.userId;
-      return new Promise(function (resolve, reject) {
-        Listing.findOneAndUpdate({ _id: listingId }, { $addToSet: { favorites: userId } }, function (error) {
-          if (error) {
-            reject({ status: 'error', error: error });
-          } else {
-            resolve({ status: 'ok', message: 'Listing added to your favored listing', error: null });
-          }
-        });
-      });
-    },
-    getDonorListings: function (user) {
-      return new Promise(function (resolve, reject) {
-        let query = Listing.find({ favorites: user.id });
-        // query.populate('uploader');
-        query.exec(function (error, result) {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(result);
-          }
-        })
-      });
-    },
-    deleteDonorListing: function (listingInfo) {
-      const listingId = listingInfo.listingId;
-      const userId = listingInfo.userId;
-      return new Promise(function (resolve, reject) {
-        Listing.findOneAndUpdate({ _id: listingId }, { $pull: { favorites: userId } }, function (error) {
-          if (error) {
-            reject({ status: 'error', error: error });
-          } else {
-            resolve({ status: 'ok', message: 'Listing removed from favorites', error: null });
-          }
-        });
-      });
-    },
-  */
 }
 
 module.exports = AdController;

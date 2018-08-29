@@ -22,7 +22,7 @@ function deleteFile(filename) {
 }
 
 router.route('/submitAd').post(
-  // ensureAuthentication.userAuthentication,
+  ensureAuthentication.userAuthentication,
   function (req, res) {
     const uploadDir = path.resolve(__dirname) + "/../uploads/ads/images";
     const formidable = require('formidable');
@@ -93,7 +93,7 @@ router.route('/getAdById').get(
 );
 
 router.route('/viewLater').post(
-  // ensureAuthentication.userOrAdminAuthentication,
+  ensureAuthentication.userOrAdminAuthentication,
   function (req, res) {
     AdsController.viewLater(req.body.userId, req.body.adId)
       .then(message => {
@@ -103,20 +103,6 @@ router.route('/viewLater').post(
       });
   }
 )
-
-/*
-router.route('/getMyListings').get(
-  ensureAuthentication.userAuthentication,
-  function (req, res) {
-    AdsController.getMyListings(req.user)
-      .then(listings => {
-        res.json(listings);
-      }).catch(error => {
-        res.send(error);
-      });
-  }
-);
-*/
 
 router.route('/updateAdListing').post(
   ensureAuthentication.userAuthentication,
@@ -145,8 +131,7 @@ router.route('/updateAdListing').post(
             let filename = files[`image-${x}`].path.replace(/\\/g, '/');
             let nameArr = filename.split('/');
             let fName = nameArr[nameArr.length - 1];
-            // let nameArr = files[`image-${x}`].path.split('\\');
-            // let fName = nameArr[nameArr.length - 1];
+
             if (files[`image-${x}`].size >= 1) {
               imgNames.push(fName);
             } else {
@@ -212,7 +197,7 @@ router.route('/getCategorisCounts').get(
 );
 
 router.route('/removeSavedAd').post(
-  // ensureAuthentication.userOrAdminAuthentication,
+  ensureAuthentication.userOrAdminAuthentication,
   function (req, res) {
     console;
     AdsController.removeSavedListing(req.body.userId, req.body.adId)

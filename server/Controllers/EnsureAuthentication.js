@@ -1,6 +1,3 @@
-// const config = require('../serverConfig');
-// const redirect = config.redirect;
-
 const EnsureAuthentication = {
   userAuthentication: function (req, res, next) {
     if (req.user && req.user.userRole.toLowerCase() == "user") {

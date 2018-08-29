@@ -4,8 +4,6 @@ import axios from 'axios';
 import { API_URL } from "../constants/constants";
 import toastr from 'toastr';
 import categories from './categories';
-// categories can also be stored in database.
-// const categories = ['Mobiles', 'Laptops', 'Clothes', 'Vehicles', 'Accessories'];
 // import objectAssign from 'object-assign';
 const months = [
   "January", "February", "March", "April", "May", "June",
@@ -62,12 +60,18 @@ const UtilityFunctions = {
   },
 
   isValidInput: function(description) {
-    let arr = description.split(' ');
-    let wrongWords = arr.filter(word => word.length > 18 ? true : false);
-    if(wrongWords.length > 0)
-      return false;
-    else
-      return true;
+    let valid = true;
+    let maxCharsPerWord = 18;
+    let newLines = description.split('\n');
+    let moreLines = newLines.filter(line => line.length > maxCharsPerWord)
+    for (let x = 0; x < moreLines.length; x++) {
+      let invalidWords = moreLines[x].split(' ').filter(word => word.length > maxCharsPerWord);
+      if(invalidWords.length > 0) {
+        valid = false;
+        break;
+      }
+    }
+    return valid;
   }
 };
 

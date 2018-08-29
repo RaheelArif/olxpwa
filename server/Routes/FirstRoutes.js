@@ -8,20 +8,23 @@ const fs = require('fs');
 // serve static images
 router.route('/image/:image')
   .get(function (req, res) {
-    var fileName = path.resolve(__dirname+'/../uploads/ads/images/' +req.params.image);
+    let dirName = path.resolve(__dirname + '/../uploads/ads/images/');
+    let defaultFileName = 'image-not-found.png';
+    var fileName = dirName + "/" + req.params.image;
     if (fs.existsSync(fileName)) {
       res.sendFile(fileName);
     } else {
-      res.send(404);
+      res.sendFile(dirName + "/" + defaultFileName);
     }
   });
 
 // /logout route
-router.route('/logout')
-  .get(function (req, res) {
+router.route('/logout').get(
+  function (req, res) {
     if (logoutUser) {
       res.send('Logout successful');
     }
-  });
+  }
+);
 
 module.exports = router;

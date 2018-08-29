@@ -247,6 +247,9 @@ class PostAdForm extends Component {
     } else if (!isNumeric(ad.sellerPhoneNumber)) {
       errors.sellerPhoneNumber = "Please provide valid phone number";
       valid = false;
+    } else if (ad.sellerPhoneNumber.length < 10 || ad.sellerPhoneNumber.length > 15) {
+      errors.sellerPhoneNumber = "Please provide valid phone number";
+      valid = false;
     }
 
     this.setState({ errors });

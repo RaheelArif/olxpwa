@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const ensureAuthentication = require('../Controllers/EnsureAuthentication');
 const MessageController = require('../Controllers/MessageController');
-// const path = require('path');
 
 router.route('/sendMessage')
   .post(
@@ -17,7 +16,7 @@ router.route('/sendMessage')
   );
 
 router.route('/getMyMessages').get(
-  // ensureAuthentication.userAuthentication,
+  ensureAuthentication.userAuthentication,
   function (req, res) {
     MessageController.getMyMessages(JSON.parse(req.query.userId))
       .then(resp => {
