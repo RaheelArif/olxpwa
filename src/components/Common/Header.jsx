@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import Drawer from '@material-ui/core/Drawer';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
 import MenuItems from './MenuItems';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -92,7 +93,8 @@ class Header extends Component {
 */
     return (
       <header>
-        <Drawer anchor="right" open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
+        {/* <Drawer anchor="right" open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}> */}
+        <SwipeableDrawer anchor="right" open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
           <div
             tabIndex={0}
             role="button"
@@ -101,7 +103,7 @@ class Header extends Component {
           >
             {sideList}
           </div>
-        </Drawer>
+        </SwipeableDrawer>
         <div className="container">
           <div className="row pt-2 pb-2">
             <div className="col-9 col-sm-9 col-lg-6 d-flex">
