@@ -48,6 +48,6 @@ mockup
 #sass cache
 **.sass-cache
 
-server/uploads/ads/images
+# server/uploads/ads/images
 
 package-lock.json

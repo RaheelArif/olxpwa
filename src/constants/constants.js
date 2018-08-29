@@ -1,6 +1,6 @@
 // settings for front end
-export const API_URL = "http://localhost:5005/";
-// export const API_URL = "/";
+// export const API_URL = "http://localhost:5005/";
+export const API_URL = "/";
 export const allowedTitleChars = 105;
 export const MAX_PRODUCT_PRICE = 10000000;
 // USER ACTIONS
