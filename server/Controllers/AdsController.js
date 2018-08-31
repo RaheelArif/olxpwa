@@ -71,6 +71,20 @@ const AdController = {
     });
   },
 
+  getMyAdById: function (adId, userId) {
+    return new Promise(function (resolve, reject) {
+      let query = Ad.findOne({_id: adId, uploader: userId});
+      query.populate('uploader', '-password');
+      query.exec(function (error, result) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      })
+    });
+  },
+
   getMyAdsListings: function (user) {
     return new Promise(function (resolve, reject) {
       let query = Ad.find({ uploader: user.id });

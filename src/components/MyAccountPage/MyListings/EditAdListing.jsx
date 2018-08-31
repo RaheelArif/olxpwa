@@ -20,8 +20,8 @@ class EditListingPage extends Component {
   }
 
   static getDerivedStateFromProps(nextProps) {
-    if(nextProps.myAds) {
-      return {myAds: nextProps.myAds, adId: nextProps.match.params.id}
+    if (nextProps.myAds) {
+      return { myAds: nextProps.myAds, adId: nextProps.match.params.id }
     }
     return null;
   }
@@ -54,10 +54,14 @@ class EditListingPage extends Component {
       let adCopyWithoutItsReferance = JSON.parse(JSON.stringify(adListing));
       this.setState({ ad: adCopyWithoutItsReferance });
     } else {
-      uf.getAdByIdFromServer(this.props.match.params.id)
+      uf.getMyAdByIdFromServer(this.props.match.params.id, this.props.user.id)
         .then(ad => {
           // it will be already an independent object so no need to create a copy of it. again.
-          this.setState({ ad: ad });
+          if (ad && ad.category) {
+            this.setState({ ad: ad });
+          } else {
+            this.props.history.push('/my-account/ads');
+          }
         });
     }
   };
@@ -124,7 +128,7 @@ function mapStateToProps(state) {
   return {
     user: state.session.user,
     authenticated: state.session.authenticated,
-    myAds: state.myAds
+    myAds: state.myAds,
   }
 }
 

@@ -42,6 +42,21 @@ const UtilityFunctions = {
     });
   },
 
+  getMyAdByIdFromServer: function (adId, userId) {
+    return new Promise(function (resolve, reject) {
+      axios.get(`${API_URL}ads/getMyAdById`, {
+        params: {adId: adId, userId: userId}
+      })
+        .then(resp => {
+          // return resp.data;
+          resolve(resp.data);
+        }).catch(err => {
+          toastr.error(err);
+          reject(err);
+        })
+    });
+  },
+
   getDateTime: function (date) {
     let month = months[date.getMonth()];
     let hours = date.getHours();

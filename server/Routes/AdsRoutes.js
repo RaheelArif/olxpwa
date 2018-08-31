@@ -92,6 +92,17 @@ router.route('/getAdById').get(
   }
 );
 
+router.route('/getMyAdById').get(
+  function (req, res) {
+    AdsController.getMyAdById(req.query.adId, req.query.userId)
+      .then(ad => {
+        res.json(ad);
+      }).catch(error => {
+        res.send(error);
+      });
+  }
+);
+
 router.route('/viewLater').post(
   ensureAuthentication.userOrAdminAuthentication,
   function (req, res) {
