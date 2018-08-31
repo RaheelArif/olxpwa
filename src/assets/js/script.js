@@ -1,25 +1,17 @@
-// import $ from 'jquery';
-// $(document).ready(function(){
-//   setTimeout(() => {
-//     $('body').niceScroll();
-//   }, 1000);
-// });
-/*
-
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js', {scope: '/'})
-  .then(function() {
-    console.log('Service Worker Registered');
-  }).catch(function(error) {
-    console.log('Error in service worker registration', error);
-  })
-}
-*/
-if('serviceWorker' in navigator) {
+// create a global object to keep track of different global tings.
+var gb = {};
+window.gb = gb;
+if ('serviceWorker' in navigator) {
+  // navigator.serviceWorker.register('/sw.js')
   navigator.serviceWorker.register('/sw.js')
-  .then(function() {
-    // serviceworker installed
-  }).catch(function(error){ //eslint-disable-line
-    // serviceworker error
-  })
+  // http://localhost:5010/sw.js
+    .then(function () {
+      // serviceworker installed
+    }).catch(function (error) { //eslint-disable-line
+      // serviceworker error
+    });
+
+  navigator.serviceWorker.ready.then(sw => {
+    gb.sw = sw;
+  });
 }

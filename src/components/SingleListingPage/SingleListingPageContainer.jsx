@@ -36,16 +36,16 @@ class SingleListingPageContainer extends Component {
   handleChange = (e) => {
     let contactToSeller = this.state.contactToSeller;
     contactToSeller[e.target.name] = e.target.value;
-    this.setState({contactToSeller});
+    this.setState({ contactToSeller });
 
-    if(this.state.validateOnChange) {
+    if (this.state.validateOnChange) {
       this.validateContactForm();
     }
   };
 
   handleSubmitContactForm = () => {
-    if(!this.validateContactForm()) {
-      return this.setState({validateOnChange: true});
+    if (!this.validateContactForm()) {
+      return this.setState({ validateOnChange: true });
     }
     let contactMessage = this.state.contactToSeller;
     contactMessage.adId = this.state.ad._id;
@@ -59,34 +59,37 @@ class SingleListingPageContainer extends Component {
     let errors = resetContact();
     let valid = true;
 
-    if(isEmpty(contact.name)) {
+    if (isEmpty(contact.name)) {
       errors.name = "Please provide your name";
       valid = false;
-    }else if( contact.name.length < 3) {
-      errors.name = "Name must be at least 3 characters long";
+    } else if (contact.name.length < 3 || contact.name.length > 30) {
+      errors.name = "Please provide a valid name";
       valid = false;
     }
 
-    if(isEmpty(contact.contactNumber)) {
+    if (isEmpty(contact.contactNumber)) {
       errors.contactNumber = "Please provide your contact number so that seller can contact you";
       valid = false;
-    }else if(!isNumeric(contact.contactNumber)) {
+    } else if (!isNumeric(contact.contactNumber)) {
       errors.contactNumber = "Only digits are allowed in contact number";
       valid = false;
-    }else if(contact.contactNumber.length < 10 || contact.contactNumber.length > 15){
+    } else if (contact.contactNumber.length < 10 || contact.contactNumber.length > 15) {
       errors.contactNumber = "Please provide a valid phone number";
       valid = false;
     }
 
-    if(isEmpty(contact.message)) {
+    if (isEmpty(contact.message)) {
       errors.message = "Please Enter your message";
       valid = false;
     } else if (contact.message.length < 25) {
       errors.message = "Message is too short, please describe your message breifly.";
       valid = false;
+    } else if (!uf.isValidInput(contact.message)) {
+      errors.message = "Please provide a valid description.";
+      valid = false;
     }
 
-    this.setState({contactToSellerErrors: errors});
+    this.setState({ contactToSellerErrors: errors });
     return valid;
   };
 

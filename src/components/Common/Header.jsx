@@ -94,7 +94,11 @@ class Header extends Component {
     return (
       <header>
         {/* <Drawer anchor="right" open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}> */}
-        <SwipeableDrawer anchor="right" open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
+        <SwipeableDrawer
+          anchor="right" open={this.state.drawerOpen}
+          onClose={this.toggleDrawer(false)}
+          onOpen={this.toggleDrawer(true)}
+        >
           <div
             tabIndex={0}
             role="button"

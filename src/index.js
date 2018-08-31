@@ -25,6 +25,8 @@ require('./favicon.ico'); // Tell webpack to load favicon.ico
 const store = window.store = configureStore();
 // store.dispatch(loadAllListings());
 // store.dispatch(loadSettings());
+// import * as notiActions from './actions/NotificationActions';
+// store.dispatch(notiActions.requestNotificationPermission());
 sessionService.initSessionService(store, {
   refreshOnCheckAuth: true, redirectPath: '/', driver: 'LOCALSTORAGE'
 });

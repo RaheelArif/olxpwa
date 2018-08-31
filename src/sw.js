@@ -1,12 +1,10 @@
-importScripts('assets/plugins/sw-toolbox/sw-toolbox.js');
+importScripts('assets/plugins/sw-toolbox/sw-toolbox.js'); //eslint-disable-line
+// importScripts('http://localhost:5005/assets/plugins/sw-toolbox/sw-toolbox.js');
 
 const swCaches = {
   'static': 'olx-pakistan',
   'dynamic': 'data-olx-pakistan'
 }
-
-var cacheName = "olx-pakistan";
-var cacheDataName = "olx-pakistan-data";
 
 var filesToCache = [
   '/',
@@ -46,21 +44,42 @@ self.addEventListener('activate', function (e) {
   self.clients.claim();
 });
 
-toolbox.router.get('/assets/*', toolbox.cacheFirst, {
+self.addEventListener('push', (evt) => {
+  let data = evt.data.json();
+  evt.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: data.icon,
+      badge: data.badge,
+    }
+  ));
+});
+
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+
+  // we can grab the data from payload like
+  // var title = e.notification.data.title;
+  e.waitUntil(
+    self.clients.openWindow(`${e.target.location.origin}/#/my-account/messages`)
+  );
+});
+
+toolbox.router.get('/assets/*', toolbox.cacheFirst, { //eslint-disable-line no-undef
   cache: {
     name: swCaches.static,
     maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
   }
 });
 
-toolbox.router.get('/index.html', toolbox.cacheFirst, {
+toolbox.router.get('/index.html', toolbox.cacheFirst, { //eslint-disable-line no-undef
   cache: {
     name: swCaches.static,
     maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
   }
 });
 
-toolbox.router.get('/favicon.ico', toolbox.cacheFirst, {
+toolbox.router.get('/favicon.ico', toolbox.cacheFirst, { //eslint-disable-line no-undef
   cache: {
     name: swCaches.static,
     maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
@@ -82,9 +101,9 @@ toolbox.router.get('/ads/getAdById/cache/5b7770a63bb8160d5476d715', function (re
 
 });
 */
-toolbox.router.get('/*', function (request, values, options) {
-  return toolbox.networkFirst(request, values, options)
-    .catch(function (error) {
+toolbox.router.get('/*', function (request, values, options) { //eslint-disable-line no-undef
+  return toolbox.networkFirst(request, values, options) //eslint-disable-line no-undef
+    .catch(function (error) { //eslint-disable-line no-unused-vars
       return caches.match(new Request('/assets/js/offline.json'));
     })
 }, {

@@ -5,12 +5,31 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const compression = require('compression');
-
-// mongoose.connect('mongodb://localhost/olxPakistan', { useNewUrlParser: true });
-mongoose.connect(
-  'mongodb+srv://sufaidPoshUser:8YeURhPsQbZel9Ej@sufaidposh-zrtrp.mongodb.net/sufaidposh?retryWrites=true',
-  { useNewUrlParser: true }
+const webpush = require('web-push');
+const vapidKeys = require('./serverConfig').vapidKeys;
+// webpush.setGCMAPIKey('<Your GCM API Key Here>');
+webpush.setVapidDetails(
+  'mailto:abdsoftfsd@gmail.com',
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
 );
+
+// This is the same output of calling JSON.stringify on a PushSubscription
+// const pushSubscription = {
+//   endpoint: '.....',
+//   keys: {
+//     auth: '.....',
+//     p256dh: '.....'
+//   }
+// };
+
+// webpush.sendNotification(pushSubscription, 'Your Push Payload Text');
+
+mongoose.connect('mongodb://localhost/olxPakistan', { useNewUrlParser: true }).catch(err => {throw err;});
+// mongoose.connect(
+//   'mongodb+srv://sufaidPoshUser:8YeURhPsQbZel9Ej@sufaidposh-zrtrp.mongodb.net/sufaidposh?retryWrites=true',
+//   { useNewUrlParser: true }
+// );
 const app = express();
 
 const corsOptions = {
@@ -68,6 +87,10 @@ app.use('/ads', adsRoutes);
 // Ads Routes
 const messageRoutes = require('./Routes/MessageRoutes');
 app.use('/messages', messageRoutes);
+
+// Notification Routes
+const notificationRoutes = require('./Routes/NotificationRoutes');
+app.use('/notifications', notificationRoutes);
 
 // handling error
 app.use(function(error, req, resp, next){

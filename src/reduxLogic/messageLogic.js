@@ -1,6 +1,7 @@
 import { createLogic } from 'redux-logic';
 import * as types from '../constants/constants';
 import * as messageActions from '../actions/MessageActions';
+import * as notificationActions from '../actions/NotificationActions';
 import axios from 'axios';
 import toastr from 'toastr';
 const url = types.API_URL;
@@ -9,11 +10,20 @@ const sendMessageLogic = createLogic({
   type: types.SEND_MESSAGE, // only apply this logic to this type
 
   process: function ({ getState, action }, dispatch, done) { // eslint-disable-line no-unused-vars
-
+    // return { name: '', contactNumber: '', message: '' };
+    let msg = action.payload;
     axios.post(url + 'messages/sendMessage', {
-      messageObject: action.payload,
+      messageObject: msg,
     })
       .then(resp => {
+        let receiverId = msg.receiver;
+        let notification = {
+          title: "Message from " + msg.name + " is received",
+          body: msg.message,
+          badge: `${url}assets/img/olx-logo.png`,
+          icon: `${url}assets/img/olx-logo.png`,
+        };
+        dispatch(notificationActions.sendNotification(receiverId, notification));
         toastr.info(resp.data);
       })
       .catch(err => {
@@ -31,6 +41,7 @@ const LoadMyMessagesLogic = createLogic({
       params: {userId: JSON.stringify(action.payload)}
     })
     .then(resp => {
+      dispatch(notificationActions.requestNotificationPermission());
       dispatch(messageActions.loadMyMessagesSuccess(resp.data));
     }).catch(err => {
       toastr.error(err);

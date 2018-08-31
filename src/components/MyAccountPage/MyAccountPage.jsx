@@ -31,7 +31,7 @@ class MyAccountContainerPage extends Component {
               <h2>My Account Page</h2>
               <p>
                 Welcome to your personalized page, please select your required page to view its content.
-            </p>
+              </p>
             </div>
           </div>
         </section>

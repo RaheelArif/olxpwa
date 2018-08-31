@@ -201,6 +201,7 @@ const SingleListingPage = (props) => {
                     <a href="javascript:void(0)" onClick={handleOpenMessageDialog}><i className="fa fa fa-send-o"></i> Send message to seller</a>
                   </div>
                   <Dialog
+                    fullScreen={true}
                     open={openMessageDialog}
                     onClose={handleCloseMessageDialog}
                     aria-labelledby="form-dialog-title"
