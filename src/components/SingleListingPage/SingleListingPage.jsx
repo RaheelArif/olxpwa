@@ -15,12 +15,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Breadcrumb from '../Common/Breadcrumb';
+import WithMobileDialog from "@material-ui/core/withMobileDialog";
 
 const SingleListingPage = (props) => {
   const {
     state, toggleLightbox, next, previous,
     handleOpenMessageDialog, handleCloseMessageDialog,
-    handleSubmitContactForm, handleChange, adViewLater
+    handleSubmitContactForm, handleChange, adViewLater, fullScreen
   } = props;
   const {
     photoIndex, isOpen, ad, openMessageDialog,
@@ -201,7 +202,7 @@ const SingleListingPage = (props) => {
                     <a href="javascript:void(0)" onClick={handleOpenMessageDialog}><i className="fa fa fa-send-o"></i> Send message to seller</a>
                   </div>
                   <Dialog
-                    fullScreen={true}
+                    fullScreen={fullScreen}
                     open={openMessageDialog}
                     onClose={handleCloseMessageDialog}
                     aria-labelledby="form-dialog-title"
@@ -295,6 +296,7 @@ SingleListingPage.propTypes = {
   handleSubmitContactForm: PropTypes.func,
   handleChange: PropTypes.func,
   adViewLater: PropTypes.func,
+  fullScreen: PropTypes.bool.isRequired,
 };
 
-export default SingleListingPage;
+export default WithMobileDialog()(SingleListingPage);
