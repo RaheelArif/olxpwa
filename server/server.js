@@ -25,11 +25,11 @@ webpush.setVapidDetails(
 
 // webpush.sendNotification(pushSubscription, 'Your Push Payload Text');
 
-mongoose.connect('mongodb://localhost/olxPakistan', { useNewUrlParser: true }).catch(err => {throw err;});
-// mongoose.connect(
-//   'mongodb+srv://sufaidPoshUser:8YeURhPsQbZel9Ej@sufaidposh-zrtrp.mongodb.net/sufaidposh?retryWrites=true',
-//   { useNewUrlParser: true }
-// );
+// mongoose.connect('mongodb://localhost/olxPakistan', { useNewUrlParser: true }).catch(err => {throw err;});
+mongoose.connect(
+  'mongodb+srv://sufaidPoshUser:8YeURhPsQbZel9Ej@sufaidposh-zrtrp.mongodb.net/sufaidposh?retryWrites=true',
+  { useNewUrlParser: true }
+);
 const app = express();
 
 const corsOptions = {
