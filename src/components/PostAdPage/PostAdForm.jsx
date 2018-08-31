@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as adActions from '../../actions/AdActions';
+import * as resetActions from '../../actions/ResetActions';
 import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -16,9 +17,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Breadcrumb from '../Common/Breadcrumb';
 import uf from '../../constants/UtilityFunctions';
-
 import { isEmpty, isNumeric } from 'validator';
 import { API_URL, MAX_PRODUCT_PRICE } from '../../constants/constants';
+
+const combinedActions = {
+  ...adActions,
+  ...resetActions
+}
 
 const styles = theme => ({
   button: {
@@ -96,8 +101,23 @@ class PostAdForm extends Component {
       errors: resetErrors(),
       validateOnChange: false,
       disableSubmitButton: false,
+      resetForm: false,
     };
     this.ad;
+    this.props.actions.startingForm();
+  }
+
+  componentDidUpdate() {
+    if(this.state.resetForm) {
+      this.props.actions.startingForm();
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps) {
+    if(nextProps.resetForm && nextProps.resetForm === true) {
+      return {ad: resetAd(), resetForm: true}
+    }
+    return null;
   }
 
   handleChange = (e) => {
@@ -538,18 +558,20 @@ PostAdForm.propTypes = {
   serverAction: PropTypes.func.isRequired,
   pageTitle: PropTypes.string,
   buttonLabel: PropTypes.string,
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  actions: PropTypes.object
 };
 
 function mapStateToProps(state) { //eslint-disable-line no-unused-vars
   return {
     // state: state
+    resetForm: state.resetForm
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(adActions, dispatch)
+    actions: bindActionCreators(combinedActions, dispatch)
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PostAdForm));

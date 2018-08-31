@@ -2,6 +2,7 @@ import { createLogic } from 'redux-logic';
 // import { sessionService } from 'redux-react-session';
 import * as types from '../constants/constants';
 import * as adActions from '../actions/AdActions';
+import * as resetActions from '../actions/ResetActions';
 import axios from 'axios';
 import toastr from 'toastr';
 const url = types.API_URL;
@@ -30,6 +31,7 @@ const submitAdLogic = createLogic({
     axios.post(url + 'ads/submitAd', fd)
       .then(resp => {
         toastr.info(resp.data.message);
+        dispatch(resetActions.resetFormSuccess());
         // dispatch(adActions.adSubmittedSuccessful());
       })
       .catch(err => {

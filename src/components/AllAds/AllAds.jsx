@@ -12,7 +12,7 @@ import DeleteAd from '../Common/DeleteAd';
 const AllAds = (props) => {
   const { allAds, filterCategory, title, userId, removeSaved } = props;
   const pageTitle = (title && title.length > 0) ? title : `Displaying ${filterCategory ? filterCategory : `All`} ads`;
-  const adsListings = allAds.slice(0, 10).map((ad, index) => {
+  const adsListings = allAds.slice(0, 50).map((ad, index) => {
     let owner = false;
     if(userId && userId == ad.uploader._id) {
       owner = true;

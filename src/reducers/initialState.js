@@ -4,4 +4,5 @@ export default {
   myMessages: [],
   catCounts: {},
   savedAds: [],
+  resetForm: false
 }

@@ -4,7 +4,7 @@ import allAdsReducer from './allAdsReducer';
 import myAdsReducer from './myAdsReducer';
 import myMessagesReducer from './myMessagesReducer';
 import savedAdsReducer from './savedAdsReducer';
-
+import resetFormReducer from './resetFormReducer';
 import catCounts from './catCountReducer';
 // import people from "./peopleReducer";
 // import registrations from "./registrationReducer";
@@ -21,6 +21,7 @@ const rootReducer = combineReducers({
   myMessages: myMessagesReducer,
   categoryCounts: catCounts,
   savedAds: savedAdsReducer,
+  resetForm: resetFormReducer,
 });
 
 export default rootReducer;
