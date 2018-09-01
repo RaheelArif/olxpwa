@@ -43,15 +43,8 @@ router.route('/sendNotification').post(
 );
 
 router.route('/showNotificationById').post(
-  function (req, res) {
-    NotificationContoller.showNotificationById(req.body.userId, req.body.notification)
-    .then(resp => {
-      res.json(resp);
-    })
-    .catch(err => {
-      res.send(err);
-    })
-
+  function (req) {
+    NotificationContoller.showNotificationById(req.body.userId, req.body.notification);
   }
 );
 
