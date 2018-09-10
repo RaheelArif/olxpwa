@@ -49,3 +49,5 @@ mockup
 server/uploads/listings/images
 
 package-lock.json
+
+dbconnect.js

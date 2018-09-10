@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const mongoose = require('mongoose');
+const dbConnect = require('./dbconnect'); //imports a function which connects to db when called.
 const compression = require('compression');
 const webpush = require('web-push');
 const vapidKeys = require('./serverConfig').vapidKeys;
@@ -25,12 +25,7 @@ webpush.setVapidDetails(
 
 // webpush.sendNotification(pushSubscription, 'Your Push Payload Text');
 
-// mongoose.connect('mongodb://localhost/olxPakistan', { useNewUrlParser: true }).catch(err => {throw err;});
-mongoose.connect(
-  'mongodb+srv://sufaidPoshUser:8YeURhPsQbZel9Ej@sufaidposh-zrtrp.mongodb.net/sufaidposh?retryWrites=true',
-  { useNewUrlParser: true }
-).then(resp => {console.log('db connected', resp)}) //eslint-disable-line
-.catch(err => {console.log('db connection err', err)}); //eslint-disable-line
+dbConnect(); //makes database connection with mongodb
 const app = express();
 
 const corsOptions = {
