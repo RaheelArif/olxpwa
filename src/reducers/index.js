@@ -6,11 +6,6 @@ import myMessagesReducer from './myMessagesReducer';
 import savedAdsReducer from './savedAdsReducer';
 import resetFormReducer from './resetFormReducer';
 import catCounts from './catCountReducer';
-// import people from "./peopleReducer";
-// import registrations from "./registrationReducer";
-// import loggedInUser from './loginReducer';
-// import donorListingReducer from './donorListingReducer';
-// import adminReducer from './adminReducer';
 import { sessionReducer } from 'redux-react-session';
 
 const rootReducer = combineReducers({

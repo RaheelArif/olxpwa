@@ -8,7 +8,15 @@ export default function catCountsReducer(state = initialState.catCounts, action)
     case types.LOAD_CATEGORIES_COUNTS_SUCCESS:
       return objectAssign (
         {},
+        state,
         action.payload
+      );
+
+    case types.GET_ALL_ADS_COUNT_SUCCESS:
+      return objectAssign (
+        {},
+        state,
+        {totalAdsCount: action.payload}
       );
 
     default:

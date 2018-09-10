@@ -21,9 +21,10 @@ export function deleteAd(adId) {
   }
 }
 
-export function loadAllAds() {
+export function loadAllAds(offset) {
   return {
     type: types.LOAD_ALL_ADS,
+    payload: offset
   }
 }
 
@@ -106,5 +107,17 @@ export function removeSaved(adId) {
     type: types.REMOVE_SAVED_AD,
     payload: adId
 
+  }
+}
+
+export function getAllAdsCount() {
+  return {
+    type: types.GET_ALL_ADS_COUNT
+  }
+}
+export function getAllAdsCountSuccess(count) {
+  return {
+    type: types.GET_ALL_ADS_COUNT_SUCCESS,
+    payload: count
   }
 }

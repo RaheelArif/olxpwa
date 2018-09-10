@@ -2,9 +2,6 @@
 logs
 *.log*
 
-# Map files
-*.map
-
 # Runtime data
 pids
 *.pid
@@ -30,7 +27,7 @@ build/Release
 node_modules
 
 #dist folder
-#dist
+# dists
 
 # IDEA/Webstorm project files
 .idea
@@ -43,11 +40,12 @@ node_modules
 .DS_Store
 
 # extra files
--- extras/*
+-- extra
+-- extras
 mockup
 #sass cache
 **.sass-cache
 
-# server/uploads/ads/images
+server/uploads/listings/images
 
 package-lock.json

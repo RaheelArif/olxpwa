@@ -45,7 +45,9 @@ const loadAllAdsLogic = createLogic({
   type: types.LOAD_ALL_ADS, // only apply this logic to this type
 
   process: function ({getState, action}, dispatch, done) { // eslint-disable-line no-unused-vars
-    axios.get(url + 'ads/getAllAds')
+    axios.get(url + 'ads/getAllAds', {
+      params: {offset: action.payload}
+    })
       .then(resp => {
         dispatch(adActions.loadAllAdsSuccess(resp.data));
       })
@@ -289,7 +291,22 @@ const removeSavedAdLogic = createLogic({
       .then(() => done());
   }
 });
-// pollsLogic
+
+const getAllAdsCount = createLogic({
+  type: types.GET_ALL_ADS_COUNT, // only apply this logic to this type
+
+  process: function ({getState, action}, dispatch, done) { // eslint-disable-line no-unused-vars
+    axios.get(url + 'ads/getAllAdsCounts')
+      .then(resp => {
+        dispatch(adActions.getAllAdsCountSuccess(resp.data));
+      })
+      .catch(err => {
+        toastr.error(err);
+      })
+      .then(() => done());
+  }
+});
+
 export default [
   submitAdLogic,
   loadAllAdsLogic,
@@ -303,4 +320,5 @@ export default [
   saveAdInCache,
   loadSavedAdsLogic,
   removeSavedAdLogic,
+  getAllAdsCount,
 ];

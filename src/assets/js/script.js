@@ -1,3 +1,4 @@
+/*
 // create a global object to keep track of different global tings.
 var gb = {};
 window.gb = gb;
@@ -15,3 +16,4 @@ if ('serviceWorker' in navigator) {
     gb.sw = sw;
   });
 }
+*/

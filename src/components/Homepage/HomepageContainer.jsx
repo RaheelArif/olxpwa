@@ -9,6 +9,7 @@ class HomepageContainer extends Component {
   constructor(props) {
     super(props);
     props.actions.loadCategoriesCounts();
+    props.actions.getAllAdsCount();
     this.state = {
       category: '',
     }

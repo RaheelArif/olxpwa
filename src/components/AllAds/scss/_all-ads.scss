@@ -32,6 +32,19 @@ $bg-all-ads: #f8f8f7;
   }
 }
 
+.loading-ads {
+  position: fixed;
+  top: 10px;
+  right: 0px;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  background-color: rgba(151, 244, 171, 0.5);
+  // width: 50%;
+  padding: 18px;
+  // font-weight: bold;
+  font-size: 30px;
+  z-index: 1000;
+}
 
 // Extra small devices (portrait phones, less than 576px)
 @media (max-width: 575.98px) {

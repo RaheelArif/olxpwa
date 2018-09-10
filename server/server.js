@@ -29,7 +29,8 @@ webpush.setVapidDetails(
 mongoose.connect(
   'mongodb+srv://sufaidPoshUser:8YeURhPsQbZel9Ej@sufaidposh-zrtrp.mongodb.net/sufaidposh?retryWrites=true',
   { useNewUrlParser: true }
-);
+).then(resp => {console.log('db connected', resp)}) //eslint-disable-line
+.catch(err => {console.log('db connection err', err)}); //eslint-disable-line
 const app = express();
 
 const corsOptions = {

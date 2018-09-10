@@ -1,18 +1,5 @@
-// const config = require('../serverConfig');
-const categories = require('../../src/constants/categories'); // array of categories
 const Ad = require('../Models/Ad');
-// const User = require('../Models/User');
-// const objectAssign = require('object-assign');
-// const isAlphanumeric = require('validator/lib/isAlphanumeric');
-// const isEmpty = require('validator/lib/isEmpty');
-// const isNumeric = require('validator/lib/isNumeric');
-// const isEmail = require('validator/lib/isEmail');
-// const isAlpha = require('validator/lib/isAlpha');
-// Ad.on('index', function(error) {
-//   // "_id index cannot be sparse"
-//   console.log(error.message);
-// });
-
+const adsPerPage = require('../serverConfig').adsPerPage;
 const AdController = {
   createNewAd: function (ad, imgNames) {
     return new Promise(function (resolve, reject) {
@@ -43,9 +30,13 @@ const AdController = {
     });
   },
 
-  getAllAds: function () {
+  getAllAds: function (offset) {
     return new Promise(function (resolve, reject) {
+      let skip = offset ? parseInt(offset) : 0;
       let query = Ad.find();
+      query.skip(skip);
+      query.limit(adsPerPage);
+      query.sort('-createdAt');
       query.populate('uploader', '-password');
       query.exec(function (error, result) {
         if (error) {
@@ -53,7 +44,44 @@ const AdController = {
         } else {
           resolve(result);
         }
-      })
+      });
+    });
+  },
+/*
+  getAllAds: function (lastCreatedAt) {
+    return new Promise(function (resolve, reject) {
+
+      // let query = Ad.find();
+      // query.populate('uploader', '-password');
+
+      let query;
+      if (lastCreatedAt) {
+        query = Ad.find({ createdAt: { $lt: lastCreatedAt } });
+      } else {
+        query = Ad.find();
+      }
+      query.limit(1);
+      query.sort('-createdAt');
+      query.populate('uploader', '-password');
+      query.exec(function (error, result) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  },
+*/
+  getTotalAdsCount: function () {
+    return new Promise(function (resolve, reject) {
+      Ad.estimatedDocumentCount((err, count) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(count);
+        }
+      });
     });
   },
 

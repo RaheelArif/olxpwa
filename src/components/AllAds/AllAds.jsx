@@ -8,13 +8,17 @@ import SaveToViewLater from '../../components/Common/SaveToViewLater';
 import RemoveSaved from '../../components/Common/RemoveSaved';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteAd from '../Common/DeleteAd';
+import ReactPaginate from 'react-paginate';
 
 const AllAds = (props) => {
-  const { allAds, filterCategory, title, userId, removeSaved } = props;
+  const {
+    allAds, filterCategory, title, userId, removeSaved,
+    totalAdsCount, onPageChange, pageCount
+  } = props;
   const pageTitle = (title && title.length > 0) ? title : `Displaying ${filterCategory ? filterCategory : `All`} ads`;
   const adsListings = allAds.slice(0, 50).map((ad, index) => {
     let owner = false;
-    if(userId && userId == ad.uploader._id) {
+    if (userId && userId == ad.uploader._id) {
       owner = true;
     }
     return (
@@ -51,9 +55,34 @@ const AllAds = (props) => {
   return (
     <div className="block all-ads">
       <h2 className="mb-0">{pageTitle}</h2>
-      <span className="text-muted">We found {allAds.length} items</span>
+      <span className="text-muted">We found {totalAdsCount ? totalAdsCount : allAds.length} items</span>
       <div className="all-listings">
         {adsListings}
+
+        { totalAdsCount &&
+        <div className="pagination-container">
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={<a href="javascript:void(0)" className="page-link" >...</a>}
+            breakClassName={"break-me"}
+            // pageCount={pageCount}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={2}
+            onPageChange={onPageChange}
+            containerClassName={"pagination"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            // subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+          />
+        </div>
+        }
       </div>
     </div>
   );
@@ -61,6 +90,8 @@ const AllAds = (props) => {
 
 AllAds.defaultProps = {
   removeSaved: false,
+  pageCount: 1,
+  onPageChange: function () { },
 }
 
 AllAds.propTypes = {
@@ -68,6 +99,9 @@ AllAds.propTypes = {
   title: PropTypes.string,
   filterCategory: PropTypes.string,
   userId: PropTypes.string,
-  removeSaved: PropTypes.bool
+  removeSaved: PropTypes.bool,
+  totalAdsCount: PropTypes.number,
+  onPageChange: PropTypes.func,
+  pageCount: PropTypes.number
 }
 export default AllAds;

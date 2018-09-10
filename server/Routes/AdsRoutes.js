@@ -72,7 +72,7 @@ router.route('/submitAd').post(
 
 router.route('/getAllAds').get(
   function (req, res) {
-    AdsController.getAllAds()
+    AdsController.getAllAds(req.query.offset)
       .then(ads => {
         res.json(ads);
       }).catch(error => {
@@ -80,6 +80,18 @@ router.route('/getAllAds').get(
       });
   }
 );
+
+router.route('/getAllAdsCounts').get(
+  function(req, res) {
+    AdsController.getTotalAdsCount()
+    .then(count => {
+      res.json(count);
+    })
+    .catch(err => {
+      res.send(err);
+    })
+  }
+)
 
 router.route('/getAdById').get(
   function (req, res) {
