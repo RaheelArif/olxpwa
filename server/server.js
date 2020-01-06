@@ -3,9 +3,10 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const dbConnect = require('./dbconnect'); //imports a function which connects to db when called.
+// const dbConnect = require('./dbconnect'); //imports a function which connects to db when called.
 const compression = require('compression');
 const webpush = require('web-push');
+const mongoose = require('mongoose');
 const vapidKeys = require('./serverConfig').vapidKeys;
 // webpush.setGCMAPIKey('<Your GCM API Key Here>');
 webpush.setVapidDetails(
@@ -25,7 +26,10 @@ webpush.setVapidDetails(
 
 // webpush.sendNotification(pushSubscription, 'Your Push Payload Text');
 
-dbConnect(); //makes database connection with mongodb
+
+mongoose.connect("mongodb://raheel:raheel123@ds263436.mlab.com:63436/practiceapp", {
+  useNewUrlParser: true
+});
 const app = express();
 
 const corsOptions = {
