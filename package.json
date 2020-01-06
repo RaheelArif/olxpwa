@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "A platform to sell your used goods on good price.",
   "engines": {
-    "npm": ">=3"
+    "npm": ">=3",
+    "node": "8.9.4"
   },
   "scripts": {
     "heroku-prebuild": "echo This runs before Heroku installs your dependencies.",
